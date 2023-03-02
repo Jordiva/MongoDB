@@ -76,4 +76,4 @@ class Ui_Login(object):
         self.label_3.setText(_translate("Login", "<html><head/><body><p align=\"right\">Usuari:</p></body></html>"))
         self.label_2.setText(_translate("Login", "Entra Usuari"))
         self.pushButton.setText(_translate("Login", "Entrar"))
-        self.errorusuari.setText(_translate("Login", "<html><head/><body><p><br/></p><p><br/></p></body></html>"))
+        self.errorusuari.setText(_translate("Login", "<html><head/><body><p><br/></p></body></html>"))
