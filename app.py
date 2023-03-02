@@ -229,7 +229,10 @@ def gui_Pacients():
 def borra_txt_login():
     Login.errorusuari.setText("")
 """
-#Buttonns Logins
+
+
+"""Prova"""
+#Buttonns Login
 #Login.Usuari_name.textEdited.connect(borra_txt_login)
 Login.pushButton.clicked.connect(action_Login)
 
