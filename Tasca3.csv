@@ -1,0 +1,52 @@
+,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14
+0,id_temporal,DNI,login,Sexe,"Cognoms,_i_Nom",Data_Naixement,Adreça,Població,CP,Província,País,Mutua,Num_mutualista,Especialitat,Num_colegiat
+1,,,xagueda,0,"Agueda Calpena, Xavier",1996-05-05T00:00:00.00Z,CARRER JOSEP FERRATER I MÒRA 2-4,Jorba,8719,Barcelona,Espanya,SS,AGCA0960505001,,
+2,,70923401A,paldana,1,"Aldana Alfaro, Pilar",1988-08-26T00:00:00.00Z,"C/ Onze de Setembre, 10A",La Llacuna,8779,Barcelona,Espanya,SS,ALAL1880826002,,
+3,,42555725K,eandreva,0,"Andreva Magro, Esteve",1975-12-15T00:00:00.00Z,Carrer de Caracas 10,Masquefa,8783,Barcelona,Espanya,Fiact,FC123456789,,
+4,,89848193G,mbellver,0,"Bellver Escriva, Marc",1970-06-19T00:00:00.00Z,"Avda. Asturies, 8-10",Montmaneu,8717,Barcelona,Espanya,Mafre,MF123456789,,
+5,,80740765R,sbosch,0,"Bosch Patrón, Salvador",1981-09-04T00:00:00.00Z,Plaça d' Europa 2,Òdena,8711,Barcelona,Espanya,AXA,AX123456789,,
+6,1,33776326K,mcbrito,1,"Brito Gallardo, Maria Carme",1995-01-28T00:00:00.00Z,Carrer ASTURIES 8-10,Santa Margarida de Montbui,8710,Barcelona,Espanya,SS,BRGA1950128003,Psiquiatría,80893318
+7,10,83228657Y,jbrufau,0,"Brufau Capacete, Jesús",1980-10-20T00:00:00.00Z,Carretera de Collblanc 157-159,Vilanova del Cami,8788,Barcelona,Espanya,Sanitas,SA123456789,,
+8,2,06651461E,abou,0,"Bou Isach, Antoni",1982-03-12T00:00:00.00Z,Carrer ONZE DE SETEMBRE 10 A,Igualada,8700,Barcelona,Espanya,DKV,D700123456789,Oncología,255098477
+9,,69261625T,lcabre,0,"Cabré Farrando, Lluc",1971-10-23T00:00:00.00Z,Carrer de Ca n'Alzina 118 D,Orpí,8787,Barcelona,Espanya,SS,CAFA0711023004,,
+10,,63835090Q,ccano,1,"Cano Espinosa, Conxita",1986-09-22T00:00:00.00Z,"Avda. Salvador Espriu, 2",Piera,8784,Barcelona,Espanya,SS,COES1830922005,,
+11,3,10468897X,scastillo,1,"Castillo Gispert, Silvia",1985-08-26T00:00:00.00Z,Carrer d' Adrià Gual 12,Igualada,8700,Barcelona,Espanya,SS,CAGI1850826006,Psiquiatría,500862411
+12,,12650629P,vclaramunt,0,"Claramunt Gimenez, Vicent",1966-02-29T00:00:00.00Z,Carrer de Bartomeu Garcia i Subirà 5,La Pobla de Claramunt,8787,Barcelona,Espanya,Mafre,MF234567891,,
+13,4,30494867H,xestruch,0,"Estruch Chordà, Xavier",1974-06-25T00:00:00.00Z,"Carrer Doctor Trueta, 113 Planta 2",Santa Margarida de Montbui,8710,Barcelona,Espanya,,,Alergología,280894115
+14,5,50013020A,jiranzo,0,"Iranzo Canals, Jordi",1961-07-15T00:00:00.00Z,Carrer Pau Casals 6,Santa Margarida de Montbui,8710,Barcelona,Espanya,,,Reumatología,280890625
+15,,,mafontana,1,"Fontana Roca, Maria Àngels",1976-01-18T00:00:00.00Z,Carrer Campsrodons 2 15,Bellprat,46421,Barcelona,Espanya,Mafre,MF345678912,,
+16,11,60117911M,agarcia,1,"Garcia Quiñones, Amanda",1986-11-31T00:00:00.00Z,"Rambla Afores, 168",El Bruc,8294,Barcelona,Espanya,SS,GAQU1861131007,,
+17,,43258031E,egutierrez,1,"Gutierrez Garcia, Ester",1963-04-09T00:00:00.00Z,"Carretera C-17 KM 49,446 ",Sant Esteve Sesrovires,8635,Barcelona,Espanya,DKV,D700234567891,,
+18,,23536488J,rgodall,0,"Godall Guixa, Raul",1972-08-01T00:00:00.00Z,Carrer Monasterios de Suso y Yuso 34 3,Cabrera d’Anoia,8718,Barcelona,Espanya,SS,GOGU0720108008,,
+19,,99353577V,jguiu,0,"Guiu Roigé, Josep",1974-03-12T00:00:00.00Z,Ronda Santa Eulalia 37,Calaf,8280,Barcelona,Espanya,Sanitas,SA234567891,,
+20,6,,cjunyent,1,"Junyent Martos, Cristina",1990-07-25T00:00:00.00Z,Carrer d' Holanda 53 5,Vilanova del Cami,8788,Barcelona,Espanya,,,Medicina familiar y comunitaria,82593313
+21,,73949661S,ilarrubia,0,"Larrubia López, Isidre",1996-05-16T00:00:00.00Z,Carrer ANTONI BELL 2 3 C,Calonge de Segarra,8281,Barcelona,Espanya,SS,LALO0960516009,,
+22,,61121679F,dleon,0,"Leon Cao, Daniel",1988-08-15T00:00:00.00Z,Carrer MERCADAL 34,Santa Margarida de Montbui,8710,Barcelona,Espanya,SS,LECA0880815001,,
+23,,67394939V,fegonzalez,0,"Gonzalez Fernàndes, Ferran Eloi",1975-12-19T00:00:00.00Z,Carrer de Ferrer i Guàrdia 38,Capellades,8786,Barcelona,Espanya,SS,GOFE751219002,,
+24,,68117357M,mlmiranda,1,"Miranda Herrada, Maria Llanos",1970-06-29T00:00:00.00Z,Carrer de Potosí 20,Carme,8787,Barcelona,Espanya,Mutua Madrileña,MM123456789,,
+25,12,74687834A,nbacardit,1,"Bacardit Llavall, Núria",1981-09-13T00:00:00.00Z,Carrer del Cementiri Nou 4,Abrera,8630,Barcelona,Espanya,Fiact,FC234567891,,
+26,,83676914Q,jrmarsal,0,"Marsal Gomez, José Ramon",1995-01-28T00:00:00.00Z,Carrer DE LES ROSES 19 1B,Castellfollit de Riubregós,8283,Barcelona,Espanya,DKV,D700345678912,,
+27,7,91557572T,smatamala,0,"Matamala Muñoz, Sergi",1980-10-12T00:00:00.00Z,Carrer Sant Martí 67,Vilanova del Cami,8788,Barcelona,Espanya,,,Cardiología,430862361
+28,,97543813P,emontalva,1,"Montalvá Baeza, Elisa",1982-03-10T00:00:00.00Z,Avinguda de Joan Maragall 3 ,Castellolí,8719,Barcelona,Espanya,SS,MOBA1820310003,,
+29,,60477362N,rmoreno,1,"Moreno Cruz, Roser",1971-10-23T00:00:00.00Z,Carrer de Copenhaguen 299,Vilanova del Cami,8788,Barcelona,Espanya,SS,MOCR1711023004,,
+30,13,,driu,0,"Riu Ollé, David",1981-09-26T00:00:00.00Z,Carrer MERCURI 5,Santa Maria de Miralles,8787,Barcelona,Espanya,Mafre,MF456789123,,
+31,,99987984S,pjou,1,"Jou Landete, Patricia",1995-01-29T00:00:00.00Z,Calle Santander 42-48 Nave 38,Vilanova del Cami,8788,Barcelona,Espanya,SS,JOLA1950129005,,
+32,,26595052Z,yparis,0,"Paris Bech, Yian",1980-10-20T00:00:00.00Z,Carretera VIC 25-31 ENT 1,La Torre de Claramunt,8789,Barcelona,Espanya,SS,PABE801020006,,
+33,14,23800620J,pgonzalez,0,"Gonzalez Oltra, Pere",1982-03-10T00:00:00.00Z,"Avda. Catalunya, 11",Vallbona d’Anoia,8785,Barcelona,Espanya,SS,GOOL0820310007,,
+34,,,jfmontserrat,0,"Montserrat Ortíz, José Fidel",1971-06-20T00:00:00.00Z,"Rambla de Guadalajara, 16",Hostalets de Pierola,8781,Barcelona,Espanya,DKV,MOOR0710620008,,
+35,8,33577794W,bpeiris,0,"Peiris Palau, Bernat",1983-09-30T00:00:00.00Z,Passatge d' Adolf Comeron 4 2ª,Igualada,8700,Barcelona,Espanya,,,Neurología,281765454
+36,,93407194P,jpastor,0,"Pastor Vallès, Jordi",1985-07-31T00:00:00.00Z,Carrer de les guilleries 18,Els Prats de Rei,8281,Barcelona,Espanya,SS,PAVA0850731009,,
+37,,68398890H,xperez,0,"Pérez Orellana, Xavier",1966-01-02T00:00:00.00Z,Avinguda Madrid 146 Bajos 1ª,Collbató,8293,Barcelona,Espanya,SS,PEOR0660102001,,
+38,9,32916696Q,jserver,0,"Server López, Jordi",1974-04-05T00:00:00.00Z,Carrer del Montsant 17,Igualada,8700,Barcelona,Espanya,,,Oncología,172847501
+39,,70726231N,pteres,1,"Teres Vinaixa, Pilar",1996-06-09T00:00:00.00Z,Passeig DE LA CARRERADA 2 ,Pujalt,8282,Barcelona,Espanya,SS,TEVI1960609002,,
+40,15,87547738D,fxvila,0,"Vila Torras, Francesc Xavier",1988-08-12T00:00:00.00Z,Carrer Carreras i Candi 76-84,Rubió,8719,Barcelona,Espanya,SS,VITO0880812003,,
+41,,36382906B,mahuerta,0,"Huerta, Miguel Angel",1975-12-14T00:00:00.00Z,Carrer CAN PI 15,Sant Martí de Tous,8712,Barcelona,Espanya,ASEPEYO,AS123456789,,
+42,,36361798V,jstorne,0,"Torné Pont, Josep Salvador",1970-06-16T00:00:00.00Z,Carrer d' Ignasi Iglésias 19,Esparreguera,8298,Barcelona,Espanya,AXA,AX234567891,,
+43,,10493630H,jrraluy,0,"Raluy Garcia, Joan Ramon",1981-09-17T00:00:00.00Z,Passatge de Vilaret 54,Sant Martí Sesgueioles,8282,Barcelona,Espanya,SS,RAGA0810917004,,
+44,,17327179Z,msanchez,0,"Sanchez de Gregorio, Miquel",1995-01-23T00:00:00.00Z,Avinguda DE LES PUNTES 3,Sant Pere Sallavinera,8281,Barcelona,Espanya,Fiact,FC345678912,,
+45,,67836368F,asantos,0,"Santos Silvestre, Antoni",1980-05-18T00:00:00.00Z,"Plaça Sant Miquel, 35",Veciana,8289,Barcelona,Espanya,Agrupació Mútua,AM123456789,,
+46,,10369714A,jmserrano,0,"Serrano Martí, Jean Marc",1974-03-27T00:00:00.00Z,Carrer de Ricardo Caro 62 BAJOS,Vilanova del Cami,8788,Barcelona,Espanya,Mútua General de Catalunya,MGC123456789,,
+47,16,83817042M,jsolanes,0,"Solanes Panadés, Joel",1990-07-15T00:00:00.00Z,"Avda. Ramon i Cajal, 24",Collbató,8293,Barcelona,Espanya,Adeslas,AD123456789,,
+48,17,60125391X,nreguart,1,"Reguart Clarasó, Noemí",1975-06-19T00:00:00.00Z,Carrer Finisterre 7,Copons,8289,Barcelona,Espanya,Asisa,ASS123456789,,
+49,,55679199V,msalut,1,"Salut Ventura, Montse",1995-01-25T00:00:00.00Z,"Carrer Major, 14",Vilanova del Cami,8788,Barcelona,Espanya,SS,SAVE1950125005,,
+50,,,lperalta,1,"Peralta Torres, Lidia",1959-10-23T00:00:00.00Z,"Passeig Verdaguer, 126",Igualada,8700,Barcelona,Espanya,SS,PATO1591023006,,
