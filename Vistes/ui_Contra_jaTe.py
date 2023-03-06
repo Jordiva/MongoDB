@@ -109,9 +109,9 @@ class Ui_Login(object):
         _translate = QtCore.QCoreApplication.translate
         Login.setWindowTitle(_translate("Login", "Login"))
         self.usuari.setText(_translate("Login", "<html><head/><body><p><br/></p></body></html>"))
-        self.pushButton_4.setText(_translate("Login", "Restaurar contrasenya"))
+        self.pushButton_4.setText(_translate("Login", "Cambiar contrasenya"))
         self.usuari_3.setText(_translate("Login", "<html><head/><body><p>Entra la contrasenya </p></body></html>"))
-        self.pushButton_3.setText(_translate("Login", "Entra"))
+        self.pushButton_3.setText(_translate("Login", "Entrar"))
         self.pushButton_5.setText(_translate("Login", "Back"))
         self.label.setText(_translate("Login", "<html><head/><body><p><span style=\" font-size:20pt;\">Contrasenya:</span></p></body></html>"))
         self.errorcontra.setText(_translate("Login", "<html><head/><body><p><br/></p></body></html>"))

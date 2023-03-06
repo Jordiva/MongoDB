@@ -48,7 +48,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;
 background-color: rgb(72, 201, 176);</string>
       </property>
       <property name="text">
-       <string>Restaurar contrasenya</string>
+       <string>Cambiar contrasenya</string>
       </property>
      </widget>
     </item>
@@ -80,7 +80,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;
 background-color: rgb(72, 201, 176);</string>
       </property>
       <property name="text">
-       <string>Entra</string>
+       <string>Entrar</string>
       </property>
      </widget>
     </item>

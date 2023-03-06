@@ -4,6 +4,9 @@ import os
 from pymongo import MongoClient
 from dotenv import load_dotenv
 from PyQt5 import QtWidgets , uic
+import hashlib
+
+
 
 app = QtWidgets.QApplication([])
 
@@ -58,11 +61,12 @@ def comprova_contra():
 
     contra = usuari.get("Contraseña")
     contraposada = Contra_jaTe.contra1.text()
+    encriptContra = hashlib.sha256(contraposada.encode('utf-8'))
     if contra == "":
         Contra_jaTe.errorcontra.setText("Contrasenya buida")
         Contra_jaTe.errorcontra.setStyleSheet("color: rgb(255, 0, 0);")
     
-    elif contra == contraposada:
+    elif contra == encriptContra.hexdigest():
         Contra_jaTe.errorcontra.setText("Contrasenya correcta")
         Contra_jaTe.errorcontra.setStyleSheet("color: rgb(0, 255, 0);")
         Contra_jaTe.contra1.setText("")
@@ -96,11 +100,21 @@ def action_restablir_contar():
     nom = totnom.split(" ")
     usuari = Usuaris.find_one({"login": nom[1]})
 
+
     contra_Actual = usuari.get("Contraseña")    
+
+
+    
     
     vella = restablir_contra.contra.text()
+    
+    encriptContraVella = hashlib.sha256(vella.encode('utf-8')).hexdigest()
+    
     nova = restablir_contra.contra1.text()
     nova_copia = restablir_contra.contra2.text()
+    
+    encriptContraNova = hashlib.sha256(nova.encode('utf-8')).hexdigest()
+
     
     #comprovar que los campos no sean vacios campos (vella nova nova_copia)
     if vella == "":
@@ -114,9 +128,9 @@ def action_restablir_contar():
         restablir_contra.errorcontra.setStyleSheet("color: rgb(255, 0, 0);")
     else:
         if nova == nova_copia:
-            if vella == contra_Actual:
-                if nova != vella:
-                    Usuaris.update_one({"login": nom[1]}, {"$set": {"Contraseña": nova}})
+            if encriptContraVella == contra_Actual:
+                if encriptContraNova != encriptContraVella:
+                    Usuaris.update_one({"login": nom[1]}, {"$set": {"Contraseña": encriptContraNova}})
                     restablir_contra.errorcontra.setText("Contrasenya canviada")
                     restablir_contra.errorcontra.setStyleSheet("color: rgb(0, 255, 0);")
                     restablir_contra.contra.setText("")
@@ -154,7 +168,8 @@ def action_crear_contraseña():
             Contra_fer.errorcontra.setText("Contrasenyes correctes")
             Contra_fer.errorcontra.setStyleSheet("color: rgb(0, 255, 0);")
             filtre = {'login': nom[1]}
-            newvalues = { "$set": { 'Contraseña': contra1 } }
+            encript = hashlib.sha256(contra1.encode('utf-8'))
+            newvalues = { "$set": { 'Contraseña': encript.hexdigest() } }
             Usuaris.update_one(filtre , newvalues) 
             Contra_fer.contra1.setText("")
             Contra_fer.contra2.setText("")
