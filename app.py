@@ -51,7 +51,6 @@ def action_Login():
             restablir_contra.usuari.setText("Usuari: "+nom)
             gui_Contra_jaTe()
 
-
 def comprova_contra():
 
     totnom = Contra_jaTe.usuari.text()
