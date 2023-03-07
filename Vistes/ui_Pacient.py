@@ -68,7 +68,7 @@ class Ui_Roles(object):
         Roles.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(Roles)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Roles)
 
     def retranslateUi(self, Roles):

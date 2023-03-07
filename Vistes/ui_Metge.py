@@ -74,7 +74,7 @@ class Ui_Roles(object):
         self.actiona_2.setObjectName("actiona_2")
 
         self.retranslateUi(Roles)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Roles)
 
     def retranslateUi(self, Roles):
