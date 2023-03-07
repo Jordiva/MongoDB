@@ -25,7 +25,7 @@ MONGODB_URI = os.getenv("MONGODB_URI")
 client = MongoClient(MONGODB_URI)
 db = client.jvalldaur
 Usuaris = db["USUARIS"]
-Metges = db["METGES"]
+Metges = db["METGES"]   
 Pacients = db["PACIENTS"]
 
 
@@ -81,10 +81,14 @@ def comprova_contra():
             Rols.usuari.setText("Usuari: "+nom[1])
             gui_Rols()
         elif pacient != None:
+            P_Pacient.usuari_2.setText("Pacient: "+nom[1])
             P_Pacient.usuari.setText("Pacient: "+nom[1])
+            
             gui_Pacients()
         elif metge != None:
             P_Metge.usuari.setText("Metge: "+nom[1])
+            P_Metge.usuari_2.setText("Metge: "+nom[1])
+            
             gui_Metges()
 
     else:
@@ -197,9 +201,11 @@ def action_rols_M_P():
 
     if rolAgafat == "Metge":
         P_Metge.usuari.setText("Metge: "+nom[1])
+        P_Metge.usuari_2.setText("Metge: "+nom[1])
         gui_Metges()
     if rolAgafat == "Pacient":
         P_Pacient.usuari.setText("Pacient: "+nom[1])
+        P_Pacient.usuari_2.setText("Pacient: "+nom[1])
         gui_Pacients()
 
 

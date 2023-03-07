@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>677</width>
-    <height>452</height>
+    <height>472</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -56,10 +56,10 @@ background-color: qlineargradient(spread:pad, x1:0.637, y1:0.392364, x2:0.01, y2
           </property>
           <property name="styleSheet">
            <string notr="true">font: 16pt &quot;MS Shell Dlg 2&quot;;
-color: white;</string>
+color: black;</string>
           </property>
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;sa&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
@@ -77,6 +77,19 @@ color: white;</string>
         <string>Consulta Visites</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_3">
+        <item row="1" column="0">
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
         <item row="0" column="0">
          <widget class="QLabel" name="usuari_2">
           <property name="font">
@@ -90,14 +103,14 @@ color: white;</string>
           </property>
           <property name="styleSheet">
            <string notr="true">font: 16pt &quot;MS Shell Dlg 2&quot;;
-color: white;</string>
+color: Black;</string>
           </property>
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;sa&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
+        <item row="2" column="1">
          <widget class="QPushButton" name="pushButton_2">
           <property name="text">
            <string>PushButton</string>

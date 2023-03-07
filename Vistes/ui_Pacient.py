@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_Roles(object):
     def setupUi(self, Roles):
         Roles.setObjectName("Roles")
-        Roles.resize(677, 452)
+        Roles.resize(677, 472)
         Roles.setStyleSheet("QWidget#centralwidget{\n"
 "background-color: qlineargradient(spread:pad, x1:0.637, y1:0.392364, x2:0.01, y2:0.994, stop:0 rgba(26, 255, 147, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "}")
@@ -37,7 +37,7 @@ class Ui_Roles(object):
         font.setWeight(50)
         self.usuari.setFont(font)
         self.usuari.setStyleSheet("font: 16pt \"MS Shell Dlg 2\";\n"
-"color: white;")
+"color: black;")
         self.usuari.setObjectName("usuari")
         self.gridLayout_2.addWidget(self.usuari, 0, 0, 1, 1)
         self.pushButton = QtWidgets.QPushButton(parent=self.DemanarHora)
@@ -48,6 +48,8 @@ class Ui_Roles(object):
         self.ConsultaVisites.setObjectName("ConsultaVisites")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.ConsultaVisites)
         self.gridLayout_3.setObjectName("gridLayout_3")
+        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
+        self.gridLayout_3.addItem(spacerItem1, 1, 0, 1, 1)
         self.usuari_2 = QtWidgets.QLabel(parent=self.ConsultaVisites)
         font = QtGui.QFont()
         font.setFamily("MS Shell Dlg 2")
@@ -57,12 +59,12 @@ class Ui_Roles(object):
         font.setWeight(50)
         self.usuari_2.setFont(font)
         self.usuari_2.setStyleSheet("font: 16pt \"MS Shell Dlg 2\";\n"
-"color: white;")
+"color: Black;")
         self.usuari_2.setObjectName("usuari_2")
         self.gridLayout_3.addWidget(self.usuari_2, 0, 0, 1, 1)
         self.pushButton_2 = QtWidgets.QPushButton(parent=self.ConsultaVisites)
         self.pushButton_2.setObjectName("pushButton_2")
-        self.gridLayout_3.addWidget(self.pushButton_2, 1, 0, 1, 1)
+        self.gridLayout_3.addWidget(self.pushButton_2, 2, 1, 1, 1)
         self.tabWidget.addTab(self.ConsultaVisites, "")
         self.gridLayout.addWidget(self.tabWidget, 0, 0, 1, 1)
         Roles.setCentralWidget(self.centralwidget)
@@ -74,9 +76,9 @@ class Ui_Roles(object):
     def retranslateUi(self, Roles):
         _translate = QtCore.QCoreApplication.translate
         Roles.setWindowTitle(_translate("Roles", "Pacient"))
-        self.usuari.setText(_translate("Roles", "<html><head/><body><p><br/></p></body></html>"))
+        self.usuari.setText(_translate("Roles", "<html><head/><body><p>sa</p></body></html>"))
         self.pushButton.setText(_translate("Roles", "PushButton"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.DemanarHora), _translate("Roles", "Demanar Hora"))
-        self.usuari_2.setText(_translate("Roles", "<html><head/><body><p><br/></p></body></html>"))
+        self.usuari_2.setText(_translate("Roles", "<html><head/><body><p>sa</p></body></html>"))
         self.pushButton_2.setText(_translate("Roles", "PushButton"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.ConsultaVisites), _translate("Roles", "Consulta Visites"))
