@@ -28,6 +28,8 @@ Usuaris = db["USUARIS"]
 Metges = db["METGES"]   
 Pacients = db["PACIENTS"]
 
+#Prova
+
 
 def action_Login():
 
