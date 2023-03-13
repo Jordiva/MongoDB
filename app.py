@@ -84,10 +84,13 @@ def comprova_contra():
             P_Pacient.usuari_2.setText("Pacient: "+nom[1])
             P_Pacient.usuari.setText("Pacient: "+nom[1])
             
+            
+            
             gui_Pacients()
         elif metge != None:
             P_Metge.usuari.setText("Metge: "+nom[1])
             P_Metge.usuari_2.setText("Metge: "+nom[1])
+            
             
             gui_Metges()
 
@@ -202,6 +205,10 @@ def action_rols_M_P():
     if rolAgafat == "Metge":
         P_Metge.usuari.setText("Metge: "+nom[1])
         P_Metge.usuari_2.setText("Metge: "+nom[1])
+        llista_noms = llista_metges()
+        P_Metge.llista_metges.addItems(llista_noms)
+        
+        
         gui_Metges()
     if rolAgafat == "Pacient":
         P_Pacient.usuari.setText("Pacient: "+nom[1])
@@ -209,9 +216,12 @@ def action_rols_M_P():
         gui_Pacients()
 
 
-def action_Metge():
-    print("Metge")
-
+def action_Pacient():
+    lli =llista_metges()
+    HoraIdia = P_Pacient.dateTimeEdit.text()
+    print(HoraIdia)
+    print(lli)
+    
 
 def action_back():
     Login.Usuari_name.setText("")
@@ -246,6 +256,8 @@ def gui_Rols():
     Rols.show()
 
 
+
+
 def gui_Metges():
     Contra_jaTe.hide()
     Rols.hide()
@@ -256,6 +268,21 @@ def gui_Pacients():
     Rols.hide()
     Contra_jaTe.hide()
     P_Pacient.show()
+    llista_noms = llista_metges()
+    P_Pacient.llista_metges.addItems(llista_noms)
+
+
+def llista_metges():
+    metges_ids = []
+    metges_noms = []
+    for metges in Metges.find():
+        metges_ids.append(metges['_id'])
+        
+    for metge in Usuaris.find({'_id': {'$in': metges_ids}}):
+        metges_noms.append(metge['Nom'])
+        
+    return metges_noms;
+
 
 
 """
@@ -285,6 +312,12 @@ restablir_contra.pushButton_2.clicked.connect(action_back)
 Rols.pushButton.clicked.connect(action_rols_M_P)
 
 # Buttons-menu Metge
+
+
+# Buttons-menu Pacient
+
+P_Pacient.pushButton.clicked.connect(action_Pacient)
+
 
 
 Login.show()
