@@ -30,7 +30,10 @@ background-color: qlineargradient(spread:pad, x1:0.637, y1:0.392364, x2:0.01, y2
         <string>Demanar Hora</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="6" column="1">
+        <item row="1" column="1">
+         <widget class="QDateEdit" name="dateEdit"/>
+        </item>
+        <item row="8" column="1">
          <widget class="QPushButton" name="pushButton">
           <property name="styleSheet">
            <string notr="true">border-radius:10px;
@@ -41,6 +44,19 @@ background-color: rgb(72, 201, 176);</string>
            <string>Demanar</string>
           </property>
          </widget>
+        </item>
+        <item row="6" column="0">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
         <item row="0" column="0">
          <widget class="QLabel" name="usuari">
@@ -62,8 +78,18 @@ color: black;</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="0">
-         <spacer name="verticalSpacer">
+        <item row="5" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Metges</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <spacer name="verticalSpacer_3">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -75,8 +101,8 @@ color: black;</string>
           </property>
          </spacer>
         </item>
-        <item row="1" column="1">
-         <widget class="QDateTimeEdit" name="dateTimeEdit"/>
+        <item row="5" column="1">
+         <widget class="QComboBox" name="llista_metges"/>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label">
@@ -98,10 +124,14 @@ color: black;</string>
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="QComboBox" name="llista_metges"/>
+         <widget class="QTimeEdit" name="timeEdit">
+          <property name="displayFormat">
+           <string>HH:mm:ss</string>
+          </property>
+         </widget>
         </item>
         <item row="2" column="1">
-         <spacer name="verticalSpacer_3">
+         <spacer name="verticalSpacer_4">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -114,9 +144,9 @@ color: black;</string>
          </spacer>
         </item>
         <item row="3" column="0">
-         <widget class="QLabel" name="label_2">
+         <widget class="QLabel" name="label_3">
           <property name="text">
-           <string>Metges</string>
+           <string>Hora a Demanar</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

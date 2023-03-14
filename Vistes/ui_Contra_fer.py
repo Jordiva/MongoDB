@@ -75,12 +75,12 @@ class Ui_Login(object):
         self.usuari.setGeometry(QtCore.QRect(20, 30, 231, 31))
         font = QtGui.QFont()
         font.setFamily("MS Shell Dlg 2")
-        font.setPointSize(36)
+        font.setPointSize(16)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
         self.usuari.setFont(font)
-        self.usuari.setStyleSheet("font: 36pt \"MS Shell Dlg 2\";\n"
+        self.usuari.setStyleSheet("font: 16pt \"MS Shell Dlg 2\";\n"
 "color: white;")
         self.usuari.setObjectName("usuari")
         self.pushButton_2 = QtWidgets.QPushButton(parent=self.centralwidget)
@@ -113,6 +113,6 @@ class Ui_Login(object):
         self.label.setText(_translate("Login", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Contrasenya:</span></p></body></html>"))
         self.errorcontra.setText(_translate("Login", "<html><head/><body><p><br/></p><p><br/></p></body></html>"))
         self.label_2.setText(_translate("Login", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Torna a escriure la</span></p><p><span style=\" font-size:10pt; font-weight:600;\">Contrasenya:</span></p></body></html>"))
-        self.usuari.setText(_translate("Login", "<html><head/><body><p><span style=\" font-size:16pt;\"><br/></span></p></body></html>"))
+        self.usuari.setText(_translate("Login", "<html><head/><body><p><br/></p></body></html>"))
         self.pushButton_2.setText(_translate("Login", "Back"))
         self.usuari_2.setText(_translate("Login", "<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">Crea una contrasenya </span></p></body></html>"))

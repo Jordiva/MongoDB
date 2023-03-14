@@ -161,8 +161,6 @@ def action_restablir_contar():
 
 
 def action_crear_contraseña():
-    # agafar el nom del usuari que esta separat per espais
-
     totnom = Contra_fer.usuari.text()
     nom = totnom.split(" ")
 
@@ -204,11 +202,7 @@ def action_rols_M_P():
 
     if rolAgafat == "Metge":
         P_Metge.usuari.setText("Metge: "+nom[1])
-        P_Metge.usuari_2.setText("Metge: "+nom[1])
-        llista_noms = llista_metges()
-        P_Metge.llista_metges.addItems(llista_noms)
-        
-        
+        P_Metge.usuari_2.setText("Metge: "+nom[1])        
         gui_Metges()
     if rolAgafat == "Pacient":
         P_Pacient.usuari.setText("Pacient: "+nom[1])
@@ -217,10 +211,15 @@ def action_rols_M_P():
 
 
 def action_Pacient():
-    lli =llista_metges()
-    HoraIdia = P_Pacient.dateTimeEdit.text()
-    print(HoraIdia)
-    print(lli)
+    dia = P_Pacient.dateEdit.text()
+
+    hora = P_Pacient.timeEdit.text()
+    
+    metge = P_Pacient.llista_metges.currentText()
+    print(dia)
+    print(hora)
+    print(metge)
+    
     
 
 def action_back():
@@ -275,13 +274,22 @@ def gui_Pacients():
 def llista_metges():
     metges_ids = []
     metges_noms = []
+    metges_cognoms= []
+    nomComplert = []    
     for metges in Metges.find():
         metges_ids.append(metges['_id'])
         
     for metge in Usuaris.find({'_id': {'$in': metges_ids}}):
         metges_noms.append(metge['Nom'])
+    
+    for metge in Usuaris.find({'_id': {'$in': metges_ids}}):
+        metges_cognoms.append(metge['Cognoms'])
         
-    return metges_noms;
+    for i in range(len(metges_noms)):
+        nomComplert.append(metges_noms[i]+" "+metges_cognoms[i])
+        
+        
+    return nomComplert;
 
 
 

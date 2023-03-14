@@ -33,13 +33,14 @@ for row in dt1_Usuaris:
         
     cognoms = row['Cognoms,_i_Nom'].split(',')    
     
+    
     _id = crear_colection_USUARIS.insert_one({
         'id_temporal': row['id_temporal'],
         'DNI': row['DNI'],
         'login': row['login'],
         'Sexe': row['Sexe'],
-        'Nom': cognoms[1],
-        'Cognoms': cognoms[0],
+        'Nom': cognoms[1].lstrip(),
+        'Cognoms': cognoms[0].lstrip(),
         'Data_Naixement': row['Data_Naixement'],
         'Adreça': row['Adreça'],
         'Població': row['Població'],
