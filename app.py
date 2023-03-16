@@ -21,8 +21,8 @@ P_Pacient = uic.loadUi("Vistes/Pacient.ui")
 # usuari que te tot scastillo
 
 load_dotenv()
-MONGODB_URI = os.getenv("MONGODB_URI")
-client = MongoClient(MONGODB_URI)
+MONGO_URI = os.getenv("MONGO_URI")
+client = MongoClient(MONGO_URI)
 db = client.jvalldaur
 Usuaris = db["USUARIS"]
 Metges = db["METGES"]   
@@ -211,14 +211,14 @@ def action_rols_M_P():
 
 
 def action_Pacient():
-    dia = P_Pacient.dateEdit.text()
 
     hora = P_Pacient.timeEdit.text()
-    
     metge = P_Pacient.llista_metges.currentText()
-    print(dia)
     print(hora)
     print(metge)
+    
+    t = llista_hores_metge()
+    print(t)
     
     
 
@@ -255,8 +255,6 @@ def gui_Rols():
     Rols.show()
 
 
-
-
 def gui_Metges():
     Contra_jaTe.hide()
     Rols.hide()
@@ -267,8 +265,41 @@ def gui_Pacients():
     Rols.hide()
     Contra_jaTe.hide()
     P_Pacient.show()
-    llista_noms = llista_metges()
-    P_Pacient.llista_metges.addItems(llista_noms)
+    dades = llista_hores_metge()
+    
+    for dada in range(len(dades)):
+        nom = dades[dada]
+        P_Pacient.llista_metges.addItem(nom['nom'])
+    
+    
+    
+
+
+def comboBoxChanged():
+    
+    dades = llista_hores_metge()
+    metge = P_Pacient.llista_metges.currentText()
+    
+    tothors = []
+    """{'id': ObjectId('641327c5ebec7542e5003fc8'), 'nom': 'Bernat Peiris Palau', 'hores': [{'moment_visita': datetime.datetime(2023, 1, 2, 16, 0), 'id_pacient': 0, 'realitzada': 'n', 'informe': ''},
+        {'moment_visita': datetime.datetime(2023, 1, 2, 16, 30), 'id_pacient': 0, 'realitzada': 'n', 'informe': ''}"""
+    
+    for dada in range(len(dades)):
+        tot = dades[dada]
+        hora = tot['hores']
+        if tot['nom'] == metge:
+            for i in range(len(hora)):
+                #quitar los repetidos
+                if hora[i]['moment_visita'].strftime("%d/%m/%Y") not in tothors:
+                    P_Pacient.comboBox.addItem(hora[i]['moment_visita'].strftime("%d/%m/%Y"))
+                    tothors.append(hora[i]['moment_visita'].strftime("%d/%m/%Y"))
+                else:
+                    print("repetido")
+                
+            
+        
+
+    print("Current index"+ metge)
 
 
 def llista_metges():
@@ -291,6 +322,45 @@ def llista_metges():
         
     return nomComplert;
 
+def llista_hores_metge():
+    metges_ids = []
+    metges_noms = []
+    metges_cognoms= []
+    nomComplert = []   
+    hores = []
+    horametge = {}
+
+    for metges in Metges.find():
+        metges_ids.append(metges['_id'])
+
+    for metge in Usuaris.find({'_id': {'$in': metges_ids}}):
+        metges_noms.append(metge['Nom'])
+    
+    for metge in Usuaris.find({'_id': {'$in': metges_ids}}):
+        metges_cognoms.append(metge['Cognoms'])
+    
+    for i in range(len(metges_noms)):
+        nomComplert.append(metges_noms[i]+" "+metges_cognoms[i])
+    
+    
+    for i in range(len(metges_ids)):
+        horametge={'id': metges_ids[i], 'nom': nomComplert[i] , 'hores': Metges.find_one({"_id": metges_ids[i]}).get('agenda')}
+        hores.append(horametge)  
+        
+    return hores
+    
+    
+def llista_metges_hores():
+    list_metges = []
+    dict_metges = {}
+    for metge in Metges.find():
+            metge_id = metge.get('_id')
+            metge_nom = Usuaris.find_one({"_id": metge_id}).get('Nom')
+            metge_cognoms = Usuaris.find_one({"_id": metge_id}).get('Cognoms')
+            metge_nom_complet = metge_nom + " " + metge_cognoms
+            dict_metges = {'id': metge_id, 'nom': metge_nom_complet}
+            list_metges.append(dict_metges)
+    return list_metges
 
 
 """
@@ -318,6 +388,7 @@ restablir_contra.pushButton_2.clicked.connect(action_back)
 
 # Buttons Rols-M-P
 Rols.pushButton.clicked.connect(action_rols_M_P)
+P_Pacient.llista_metges.currentIndexChanged.connect(comboBoxChanged)
 
 # Buttons-menu Metge
 
@@ -325,7 +396,6 @@ Rols.pushButton.clicked.connect(action_rols_M_P)
 # Buttons-menu Pacient
 
 P_Pacient.pushButton.clicked.connect(action_Pacient)
-
 
 
 Login.show()
