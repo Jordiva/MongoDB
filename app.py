@@ -281,26 +281,33 @@ def comboBoxChanged():
     metge = P_Pacient.llista_metges.currentText()
     
     tothors = []
-    """{'id': ObjectId('641327c5ebec7542e5003fc8'), 'nom': 'Bernat Peiris Palau', 'hores': [{'moment_visita': datetime.datetime(2023, 1, 2, 16, 0), 'id_pacient': 0, 'realitzada': 'n', 'informe': ''},
-        {'moment_visita': datetime.datetime(2023, 1, 2, 16, 30), 'id_pacient': 0, 'realitzada': 'n', 'informe': ''}"""
-    
+    P_Pacient.comboBox.clear()
+
     for dada in range(len(dades)):
         tot = dades[dada]
         hora = tot['hores']
         if tot['nom'] == metge:
             for i in range(len(hora)):
-                #quitar los repetidos
                 if hora[i]['moment_visita'].strftime("%d/%m/%Y") not in tothors:
-                    P_Pacient.comboBox.addItem(hora[i]['moment_visita'].strftime("%d/%m/%Y"))
+                    P_Pacient.comboBox.addItem(hora[i]['moment_visita'].strftime("%Y-%m-%d"))
                     tothors.append(hora[i]['moment_visita'].strftime("%d/%m/%Y"))
-                else:
-                    print("repetido")
-                
-            
-        
 
-    print("Current index"+ metge)
 
+def comboBoxChanged2():
+    dades = llista_hores_metge()
+    dia = P_Pacient.comboBox.currentText()
+    metge = P_Pacient.llista_metges.currentText()
+    P_Pacient.comboBox_2.clear()
+
+    for dada in range(len(dades)):
+        tot = dades[dada]
+        hora = tot['hores']
+        if tot['nom'] == metge:
+            for i in range(len(hora)):
+                if hora[i]['moment_visita'].strftime("%Y-%m-%d") == dia:
+                    #mirar les realitzades i les que no
+                    if hora[i]['realitzada'] == 'n':
+                        P_Pacient.comboBox_2.addItem(hora[i]['moment_visita'].strftime("%H:%M")) 
 
 def llista_metges():
     metges_ids = []
@@ -349,7 +356,7 @@ def llista_hores_metge():
         
     return hores
     
-    
+
 def llista_metges_hores():
     list_metges = []
     dict_metges = {}
@@ -389,6 +396,7 @@ restablir_contra.pushButton_2.clicked.connect(action_back)
 # Buttons Rols-M-P
 Rols.pushButton.clicked.connect(action_rols_M_P)
 P_Pacient.llista_metges.currentIndexChanged.connect(comboBoxChanged)
+P_Pacient.comboBox.currentIndexChanged.connect(comboBoxChanged2)
 
 # Buttons-menu Metge
 
