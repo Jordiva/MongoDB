@@ -30,12 +30,15 @@ Metges = db["METGES"]
 Pacients = db["PACIENTS"]
 
 
+#Verificar login
 def action_Login():
 
     Login.errorusuari.setText("")
     nom = Login.Usuari_name.text()
 
     usuari = Usuaris.find_one({"login": nom})
+    
+
 
     if usuari == None:
         Login.errorusuari.setText("Usuari no trobat "+nom)
@@ -52,6 +55,7 @@ def action_Login():
             restablir_contra.usuari.setText("Usuari: "+nom)
             gui_Contra_jaTe()
 
+#comprovar si el usuari te contrasenya o no
 def comprova_contra():
 
     totnom = Contra_jaTe.usuari.text()
@@ -100,7 +104,7 @@ def comprova_contra():
         Contra_jaTe.errorcontra.setStyleSheet("color: rgb(255, 0, 0);")
         Contra_jaTe.contra1.setText("")
 
-
+# restablir la contrasenya del usuari
 def action_restablir_contar():
 
     totnom = restablir_contra.usuari.text()
@@ -160,7 +164,7 @@ def action_restablir_contar():
             restablir_contra.errorcontra.setStyleSheet(
                 "color: rgb(255, 0, 0);")
 
-
+# Crear una contrasenya per un usuari
 def action_crear_contraseña():
     totnom = Contra_fer.usuari.text()
     nom = totnom.split(" ")
@@ -192,7 +196,7 @@ def action_crear_contraseña():
             Contra_fer.contra1.setText("")
             Contra_fer.contra2.setText("")
 
-
+#escollir el rol que te l'usuari
 def action_rols_M_P():
     totnom = Rols.usuari.text()
     nom = totnom.split(" ")
@@ -210,7 +214,7 @@ def action_rols_M_P():
         P_Pacient.usuari_2.setText("Pacient: "+nom[1])
         gui_Pacients()
 
-
+#Pantalla pacients demanar cita
 def action_Pacient():
 
     dia= P_Pacient.comboBox.currentText()
@@ -252,13 +256,35 @@ def action_Pacient():
         dia = dia.split("-")
         dia = dia[2] + "/" + dia[1] + "/" + dia[0]
         print(dia)
-        #diacomplert = datetime.combine(datetime.strptime(dia, '%d/%m/%Y').date(), datetime.strptime(hora, '%H:%M:%S').time())
-        #print(diacomplert)
-    
-    
-    
-    
+        hora = hora + ":00"
+        print(hora)
+        diacomplert = datetime.combine(datetime.strptime(dia, '%d/%m/%Y').date(), datetime.strptime(hora, '%H:%M:%S').time())
+        print(diacomplert)
+        misatge =  demanar_visita(id_Metge,id_usuari,usuari,diacomplert)
+        P_Pacient.error.setText(misatge)
+        P_Pacient.error.setStyleSheet("color: rgb(0, 255, 0);")
 
+#fer la cita retorna un missatge
+def demanar_visita(id_metge,id_pacient, pacient,diahora):
+    metge = Metges.find_one({"_id": id_metge})
+    metge_usuaris = Usuaris.find_one({"_id": id_pacient})
+    print(metge)
+    print(metge_usuaris)
+    
+    missatge = "No hi ha cap metge amb aquest nom"
+    
+    if metge['agenda']:
+        for cita in metge['agenda']:
+            if cita['moment_visita'] == diahora:
+                cita['id_pacient'] = pacient['_id']
+                Metges.update_one({'_id': id_metge}, {'$set': {'agenda': metge['agenda']}})
+                missatge = "La teva visita amb el/la " + metge['Nom'] + " " + metge['Cognoms'] + " ha estat demanada correctament Pel dia " + str(diahora)
+            else:
+                missatge = "No hi ha cap metge disponible en aquest dia"
+
+    return missatge
+
+#tornar a la pantalla de login o tirar enrere
 def action_back():
     Login.Usuari_name.setText("")
     Login.errorusuari.setText("")
@@ -297,7 +323,7 @@ def gui_Metges():
     Rols.hide()
     P_Metge.show()
 
-
+#carrga la llista de metges
 def gui_Pacients():
     Rols.hide()
     Contra_jaTe.hide()
@@ -307,8 +333,7 @@ def gui_Pacients():
         nom = dades[dada]
         P_Pacient.llista_metges.addItem(nom['nom'])
 
-
-
+#mira si el metge cambia en el combobox
 def comboBoxChanged():
     
     dades = llista_hores_metge()
@@ -326,7 +351,7 @@ def comboBoxChanged():
                     P_Pacient.comboBox.addItem(hora[i]['moment_visita'].strftime("%Y-%m-%d"))
                     tothors.append(hora[i]['moment_visita'].strftime("%d/%m/%Y"))
 
-
+#mira el dia i al cambia depen de si es mou el combo box
 def comboBoxChanged2():
     dades = llista_hores_metge()
     dia = P_Pacient.comboBox.currentText()
@@ -339,9 +364,10 @@ def comboBoxChanged2():
         if tot['nom'] == metge:
             for i in range(len(hora)):
                 if hora[i]['moment_visita'].strftime("%Y-%m-%d") == dia:
-                    if hora[i]['realitzada'] == 'n':
+                    if hora[i]['id_pacient'] == 0:
                         P_Pacient.comboBox_2.addItem(hora[i]['moment_visita'].strftime("%H:%M")) 
 
+#no se si lutilitzo
 def llista_metges():
     metges_ids = []
     metges_noms = []
@@ -362,6 +388,7 @@ def llista_metges():
         
     return nomComplert;
 
+#si lo utilitzo retorna la llista de metges amb les hores
 def llista_hores_metge():
     metges_ids = []
     metges_noms = []
@@ -389,7 +416,7 @@ def llista_hores_metge():
         
     return hores
     
-
+# no se si lutilitzo
 def llista_metges_hores():
     list_metges = []
     dict_metges = {}
