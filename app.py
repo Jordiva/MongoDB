@@ -3,6 +3,7 @@ from ctypes import cast
 import os
 from pymongo import MongoClient
 from dotenv import load_dotenv
+from datetime import datetime
 from PyQt5 import QtWidgets, uic
 import hashlib
 
@@ -212,13 +213,49 @@ def action_rols_M_P():
 
 def action_Pacient():
 
-    hora = P_Pacient.timeEdit.text()
+    dia= P_Pacient.comboBox.currentText()
     metge = P_Pacient.llista_metges.currentText()
-    print(hora)
-    print(metge)
+    hora = P_Pacient.comboBox_2.currentText()
     
-    t = llista_hores_metge()
-    print(t)
+    dades = llista_hores_metge()
+    id_Metge = 0
+    
+    nomCompletMetge = None;
+    #xagueda
+    for dada in range(len(dades)):
+        tot = dades[dada]
+        if metge == tot['nom']:
+            id_Metge = tot['id']
+            nomCompletMetge = tot['nom']
+    usu = P_Pacient.usuari.text()
+    usu = usu.split(" ")
+    usuari = Usuaris.find_one({"login": usu[1]})
+    id_usuari = usuari.get("_id")
+    p1 = str(usuari.get("Nom"))
+    p2 = str( usuari.get("Cognoms"))
+    
+    nomComplertUsuari = p1 + " " + p2 
+    
+    
+    print(nomComplertUsuari)
+    print(usu[1],id_usuari)
+    print(metge , id_Metge)
+    print(hora)
+    print(dia)
+    
+    if nomComplertUsuari == nomCompletMetge:
+        P_Pacient.error.setText("No pots agafar cita amb tu mateix")
+        P_Pacient.error.setStyleSheet("color: rgb(255, 0, 0);")
+    else:
+        #modificar 
+        
+        dia = dia.split("-")
+        dia = dia[2] + "/" + dia[1] + "/" + dia[0]
+        print(dia)
+        #diacomplert = datetime.combine(datetime.strptime(dia, '%d/%m/%Y').date(), datetime.strptime(hora, '%H:%M:%S').time())
+        #print(diacomplert)
+    
+    
     
     
 
@@ -266,13 +303,10 @@ def gui_Pacients():
     Contra_jaTe.hide()
     P_Pacient.show()
     dades = llista_hores_metge()
-    
     for dada in range(len(dades)):
         nom = dades[dada]
         P_Pacient.llista_metges.addItem(nom['nom'])
-    
-    
-    
+
 
 
 def comboBoxChanged():
@@ -305,7 +339,6 @@ def comboBoxChanged2():
         if tot['nom'] == metge:
             for i in range(len(hora)):
                 if hora[i]['moment_visita'].strftime("%Y-%m-%d") == dia:
-                    #mirar les realitzades i les que no
                     if hora[i]['realitzada'] == 'n':
                         P_Pacient.comboBox_2.addItem(hora[i]['moment_visita'].strftime("%H:%M")) 
 
