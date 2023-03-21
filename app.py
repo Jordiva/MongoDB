@@ -251,22 +251,22 @@ def action_Pacient():
         
         dia = dia.split("-")
         dia = dia[2] + "/" + dia[1] + "/" + dia[0]
-        hora = hora + ":00"
-        diacomplert = datetime.combine(datetime.strptime(dia, '%d/%m/%Y').date(), datetime.strptime(hora, '%H:%M:%S').time())
-        misatge =  demanar_visita(id_Metge,id_usuari,usuari,diacomplert)
-        P_Pacient.error.setText(misatge)
-        P_Pacient.error.setStyleSheet("color: rgb(0, 255, 0);")
-        global Dades
-        Dades = llista_hores_metge()
+        if hora != "":
+            hora = hora + ":00"
+            diacomplert = datetime.combine(datetime.strptime(dia, '%d/%m/%Y').date(), datetime.strptime(hora, '%H:%M:%S').time())
+            misatge =  demanar_visita(id_Metge,id_usuari,usuari,diacomplert)
+            P_Pacient.error.setText(misatge)
+            P_Pacient.error.setStyleSheet("color: rgb(0, 255, 0);")
+        else:
+            P_Pacient.error.setText("No has escollit hora")
+            P_Pacient.error.setStyleSheet("color: rgb(255, 0, 0);")
+        
 
 
 #fer la cita retorna un missatge
 def demanar_visita(id_metge,id_pacient, pacient,diahora):
     metge = Metges.find_one({"_id": id_metge})
     metge_usuaris = Usuaris.find_one({"_id": id_pacient})
-    print(metge)
-    print(metge_usuaris)
-    
     metgeNom = P_Pacient.llista_metges.currentText()
     missatge = "Error al demanar la cita"    
     if metge != None:
@@ -277,7 +277,8 @@ def demanar_visita(id_metge,id_pacient, pacient,diahora):
                 missatge = "La teva visita amb el/la " + metgeNom + " ha estat demanada correctament Pel dia " + str(diahora)
                 #borrar el seleccionado del combobox
                 P_Pacient.comboBox_2.removeItem(P_Pacient.comboBox_2.currentIndex())
-
+                global Dades 
+                Dades= llista_hores_metge()
     return missatge
 
 #tornar a la pantalla de login o tirar enrere
@@ -333,6 +334,8 @@ def gui_Pacients():
 #mira si el metge cambia en el combobox
 def comboBoxChanged():
     
+    P_Pacient.error.setText("")
+    
     metge = P_Pacient.llista_metges.currentText()
     
     tothors = []
@@ -351,6 +354,8 @@ def comboBoxChanged():
 #mira el dia i al cambia depen de si es mou el combo box
 def comboBoxChanged2():
     #dades = llista_hores_metge()
+    P_Pacient.error.setText("")
+
     dia = P_Pacient.comboBox.currentText()
     metge = P_Pacient.llista_metges.currentText()
     P_Pacient.comboBox_2.clear()
