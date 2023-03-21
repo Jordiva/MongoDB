@@ -28,6 +28,8 @@ db = client.jvalldaur
 Usuaris = db["USUARIS"]
 Metges = db["METGES"]   
 Pacients = db["PACIENTS"]
+global Dades 
+
 
 
 #Verificar login
@@ -214,6 +216,7 @@ def action_rols_M_P():
         P_Pacient.usuari_2.setText("Pacient: "+nom[1])
         gui_Pacients()
 
+
 #Pantalla pacients demanar cita
 def action_Pacient():
 
@@ -221,11 +224,13 @@ def action_Pacient():
     metge = P_Pacient.llista_metges.currentText()
     hora = P_Pacient.comboBox_2.currentText()
     
-    dades = llista_hores_metge()
+    #dades = llista_hores_metge()
     id_Metge = 0
     
     nomCompletMetge = None;
     #xagueda
+    dades = Dades
+
     for dada in range(len(dades)):
         tot = dades[dada]
         if metge == tot['nom']:
@@ -237,16 +242,7 @@ def action_Pacient():
     id_usuari = usuari.get("_id")
     p1 = str(usuari.get("Nom"))
     p2 = str( usuari.get("Cognoms"))
-    
     nomComplertUsuari = p1 + " " + p2 
-    
-    
-    print(nomComplertUsuari)
-    print(usu[1],id_usuari)
-    print(metge , id_Metge)
-    print(hora)
-    print(dia)
-    
     if nomComplertUsuari == nomCompletMetge:
         P_Pacient.error.setText("No pots agafar cita amb tu mateix")
         P_Pacient.error.setStyleSheet("color: rgb(255, 0, 0);")
@@ -255,14 +251,14 @@ def action_Pacient():
         
         dia = dia.split("-")
         dia = dia[2] + "/" + dia[1] + "/" + dia[0]
-        print(dia)
         hora = hora + ":00"
-        print(hora)
         diacomplert = datetime.combine(datetime.strptime(dia, '%d/%m/%Y').date(), datetime.strptime(hora, '%H:%M:%S').time())
-        print(diacomplert)
         misatge =  demanar_visita(id_Metge,id_usuari,usuari,diacomplert)
         P_Pacient.error.setText(misatge)
         P_Pacient.error.setStyleSheet("color: rgb(0, 255, 0);")
+        global Dades
+        Dades = llista_hores_metge()
+
 
 #fer la cita retorna un missatge
 def demanar_visita(id_metge,id_pacient, pacient,diahora):
@@ -271,16 +267,16 @@ def demanar_visita(id_metge,id_pacient, pacient,diahora):
     print(metge)
     print(metge_usuaris)
     
-    missatge = "No hi ha cap metge amb aquest nom"
-    
-    if metge['agenda']:
+    metgeNom = P_Pacient.llista_metges.currentText()
+    missatge = "Error al demanar la cita"    
+    if metge != None:
         for cita in metge['agenda']:
             if cita['moment_visita'] == diahora:
                 cita['id_pacient'] = pacient['_id']
                 Metges.update_one({'_id': id_metge}, {'$set': {'agenda': metge['agenda']}})
-                missatge = "La teva visita amb el/la " + metge['Nom'] + " " + metge['Cognoms'] + " ha estat demanada correctament Pel dia " + str(diahora)
-            else:
-                missatge = "No hi ha cap metge disponible en aquest dia"
+                missatge = "La teva visita amb el/la " + metgeNom + " ha estat demanada correctament Pel dia " + str(diahora)
+                #borrar el seleccionado del combobox
+                P_Pacient.comboBox_2.removeItem(P_Pacient.comboBox_2.currentIndex())
 
     return missatge
 
@@ -328,7 +324,8 @@ def gui_Pacients():
     Rols.hide()
     Contra_jaTe.hide()
     P_Pacient.show()
-    dades = llista_hores_metge()
+    #dades = llista_hores_metge()
+    dades = Dades
     for dada in range(len(dades)):
         nom = dades[dada]
         P_Pacient.llista_metges.addItem(nom['nom'])
@@ -336,11 +333,11 @@ def gui_Pacients():
 #mira si el metge cambia en el combobox
 def comboBoxChanged():
     
-    dades = llista_hores_metge()
     metge = P_Pacient.llista_metges.currentText()
     
     tothors = []
     P_Pacient.comboBox.clear()
+    dades = Dades
 
     for dada in range(len(dades)):
         tot = dades[dada]
@@ -353,10 +350,12 @@ def comboBoxChanged():
 
 #mira el dia i al cambia depen de si es mou el combo box
 def comboBoxChanged2():
-    dades = llista_hores_metge()
+    #dades = llista_hores_metge()
     dia = P_Pacient.comboBox.currentText()
     metge = P_Pacient.llista_metges.currentText()
     P_Pacient.comboBox_2.clear()
+
+    dades = Dades
 
     for dada in range(len(dades)):
         tot = dades[dada]
@@ -465,6 +464,7 @@ P_Pacient.comboBox.currentIndexChanged.connect(comboBoxChanged2)
 
 P_Pacient.pushButton.clicked.connect(action_Pacient)
 
+Dades = llista_hores_metge()
 
 Login.show()
 app.exec()
