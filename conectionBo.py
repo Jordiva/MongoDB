@@ -1,6 +1,5 @@
 import os
 from datetime import datetime, timedelta
-
 import pandas as pd
 from dotenv import load_dotenv
 from pymongo import MongoClient
@@ -52,7 +51,6 @@ for row in users_list:
         'País': row['País'] if type(row['País']) != float else None,
     })
 
-    print("Usari inserit: " + row['Cognoms_i_Nom'] + "")
     objectId = user.inserted_id
 
     if type(row['Mutua']) != float and type(row['Num_mutualista']) != float:
@@ -164,7 +162,6 @@ for horari in list_horaris:
                                 }
                             }}
                         )
-    print("Metge: ", metge["_id"], " Horari: ", horari["Inici Horari"], " - ", horari["Fi Horari"], " Insertat")
 
 # Eliminar dies festius de la agenda dels metges
 festius = pd.date_range(start='2023-04-02', end='2023-04-11', freq='D')
@@ -182,7 +179,6 @@ for metge in metges.find():
                         }
                     }}
                 )
-                print("Metge: ", metge["_id"], " Visita: ", visita["moment_visita"], " Eliminada per festiu")
 
 # Actualitzar visites ja realitzades
 list_vistes = pd.read_excel(file_errors_location, sheet_name='VISITES').to_dict('records')
@@ -197,7 +193,6 @@ for visita in list_vistes:
             'agenda.$.informe': visita["Informe"]
         }}
     )
-    print("Metge: ", metge["_id"], " Dia: ", visita["Moment_visita"], " Actualitzat")
 
 # Ordenar agenda del metge que te turn de tarda i mati
 usuari = usuaris.find_one({'id_temporal': 6})
@@ -208,7 +203,6 @@ metges.update_one(
         'agenda': sorted(metge["agenda"], key=lambda k: k['moment_visita'])
     }}
 )
-print("Metge: ", metge["_id"], " Agenda ordenada")
 
 # Borrar camps nulls
 for user in usuaris.find():
@@ -218,9 +212,7 @@ for user in usuaris.find():
                 {'_id': user["_id"]},
                 {'$unset': {key: ''}}
             )
-            print("Usuari: ", user["_id"], " Camp: ", key, " Eliminat")
 
 # Borrar tots els id_temporal de la col·lecció usuaris
 usuaris.update_many({}, {'$unset': {'id_temporal': ''}})
-print("id_temporal eliminats de la col·lecció usuaris")
 print("Script finalitzat")

@@ -23,7 +23,10 @@ background-color: qlineargradient(spread:pad, x1:0.637, y1:0.392364, x2:0.01, y2
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
+      </property>
+      <property name="elideMode">
+       <enum>Qt::ElideNone</enum>
       </property>
       <widget class="QWidget" name="DemanarHora">
        <attribute name="title">
@@ -211,6 +214,13 @@ color: black;</string>
         <string>Consulta Visites</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_3">
+        <item row="2" column="1">
+         <widget class="QPushButton" name="pushButton_2">
+          <property name="text">
+           <string>PushButton</string>
+          </property>
+         </widget>
+        </item>
         <item row="0" column="0">
          <widget class="QLabel" name="usuari_2">
           <property name="font">
@@ -231,15 +241,15 @@ color: Black;</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="QPushButton" name="pushButton_2">
-          <property name="text">
-           <string>PushButton</string>
+        <item row="1" column="0">
+         <widget class="QCalendarWidget" name="calendarWidget">
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
+          <property name="selectionMode">
+           <enum>QCalendarWidget::SingleSelection</enum>
           </property>
          </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QCalendarWidget" name="calendarWidget"/>
         </item>
        </layout>
       </widget>

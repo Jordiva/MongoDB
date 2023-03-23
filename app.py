@@ -260,7 +260,6 @@ def action_Pacient():
         else:
             P_Pacient.error.setText("No has escollit hora")
             P_Pacient.error.setStyleSheet("color: rgb(255, 0, 0);")
-        
 
 
 #fer la cita retorna un missatge
@@ -432,6 +431,11 @@ def llista_metges_hores():
             dict_metges = {'id': metge_id, 'nom': metge_nom_complet}
             list_metges.append(dict_metges)
     return list_metges
+
+
+
+def  miraVisites():
+    P_Pacient.calendarWidget.
 
 
 """
