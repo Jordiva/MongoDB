@@ -261,7 +261,6 @@ def action_Pacient():
             P_Pacient.error.setText("No has escollit hora")
             P_Pacient.error.setStyleSheet("color: rgb(255, 0, 0);")
 
-
 #fer la cita retorna un missatge
 def demanar_visita(id_metge,id_pacient, pacient,diahora):
     metge = Metges.find_one({"_id": id_metge})
@@ -416,7 +415,6 @@ def llista_hores_metge():
     for i in range(len(metges_ids)):
         horametge={'id': metges_ids[i], 'nom': nomComplert[i] , 'hores': Metges.find_one({"_id": metges_ids[i]}).get('agenda')}
         hores.append(horametge)  
-        
     return hores
     
 # no se si lutilitzo
@@ -434,8 +432,8 @@ def llista_metges_hores():
 
 
 
-def  miraVisites():
-    P_Pacient.calendarWidget.
+def tabChanged():
+    print("tab changed")
 
 
 """
@@ -472,6 +470,8 @@ P_Pacient.comboBox.currentIndexChanged.connect(comboBoxChanged2)
 # Buttons-menu Pacient
 
 P_Pacient.pushButton.clicked.connect(action_Pacient)
+
+P_Pacient.tabWidget.currentChanged.connect(tabChanged)
 
 Dades = llista_hores_metge()
 
