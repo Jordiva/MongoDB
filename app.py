@@ -5,6 +5,7 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 from datetime import datetime
 from PyQt5 import QtWidgets, uic
+from PyQt5.QtWidgets import QApplication, QTableWidget, QTableWidgetItem
 import hashlib
 
 
@@ -277,6 +278,7 @@ def demanar_visita(id_metge,id_pacient, pacient,diahora):
                 P_Pacient.comboBox_2.removeItem(P_Pacient.comboBox_2.currentIndex())
                 global Dades 
                 Dades= llista_hores_metge()
+                P_Pacient.tableWidget.clearContents()
     return missatge
 
 #tornar a la pantalla de login o tirar enrere
@@ -433,7 +435,32 @@ def llista_metges_hores():
 
 
 def tabChanged():
-    print("tab changed")
+    P_Pacient.tableWidget.setColumnCount(3)
+    P_Pacient.tableWidget.setHorizontalHeaderLabels(['Metge', 'Dia', 'Hora'])
+    x = 0
+    nom = P_Pacient.usuari.text()
+    nom = nom.split(" ")
+    usuari = Usuaris.find_one({"login": nom[1]})
+    id = usuari.get('_id')
+    #buscar en la base de dades les visites del pacient i posar-les en la taula de la pestanya visites
+    for dada in range(len(Dades)):
+        tot = Dades[dada]
+        hora = tot['hores']
+        for i in range(len(hora)):
+            if hora[i]['id_pacient'] == id:
+                x = x +1 
+    P_Pacient.tableWidget.setRowCount(x)
+    y = 0
+    for dada in range(len(Dades)):
+        tot = Dades[dada]
+        hora = tot['hores']
+        for i in range(len(hora)):
+            if hora[i]['id_pacient'] == id:
+                P_Pacient.tableWidget.setItem( y ,0 ,QTableWidgetItem(tot['nom']))
+                P_Pacient.tableWidget.setItem( y ,1 ,QTableWidgetItem(hora[i]['moment_visita'].strftime("%d/%m/%Y")))
+                P_Pacient.tableWidget.setItem( y, 2 ,QTableWidgetItem(hora[i]['moment_visita'].strftime("%H:%M")))
+                y = y + 1 
+    
 
 
 """
