@@ -1,29 +1,38 @@
-import calendar
-import tkinter as tk
+from PyQt5.QtWidgets import QApplication, QTableWidget, QTableWidgetItem, QPushButton, QVBoxLayout, QWidget
+from PyQt5.QtCore import Qt
 
-def highlight_day(year, month, day):
-    root = tk.Tk()
-    root.title("Calendar")
+class TableWidgetExample(QWidget):
+    def __init__(self):
+        super().__init__()
 
-    cal = calendar.monthcalendar(year, month)
+        self.tableWidget = QTableWidget()
+        self.tableWidget.setColumnCount(3)
+        self.tableWidget.setHorizontalHeaderLabels(['Name', 'Age', 'Delete'])
 
-    def on_day_clicked(selected_day):
-        selected_date = f"{year}-{month:02d}-{selected_day:02d}"
-        date_label.config(text=selected_date)
+        data = [['John', '25'], ['Jane', '30'], ['Bob', '40']]
 
-    for week_idx, week in enumerate(cal):
-        for day_idx, d in enumerate(week):
-            if d == day:
-                label = tk.Label(root, text=d, bg="yellow")
-            else:
-                label = tk.Label(root, text=d)
-            label.grid(row=week_idx+1, column=day_idx, padx=5, pady=5)
-            label.bind("<Button-1>", lambda event, day=d: on_day_clicked(day))
+        for i, row in enumerate(data):
+            self.tableWidget.insertRow(i)
+            for j, item in enumerate(row):
+                newItem = QTableWidgetItem(item)
+                self.tableWidget.setItem(i, j, newItem)
 
-    date_label = tk.Label(root, text="")
-    date_label.pack(pady=10)
+            deleteButton = QPushButton('Delete')
+            deleteButton.clicked.connect(self.deleteRow)
+            self.tableWidget.setCellWidget(i, 2, deleteButton)
 
-    root.mainloop()
+        layout = QVBoxLayout()
+        layout.addWidget(self.tableWidget)
+        self.setLayout(layout)
 
-# Example usage
-highlight_day(2023, 3, 15) # highlights March 15, 2023 and allows user to select a day
+    def deleteRow(self):
+        button = self.sender()
+        index = self.tableWidget.indexAt(button.pos())
+        if index.isValid():
+            self.tableWidget.removeRow(index.row())
+
+if __name__ == '__main__':
+    app = QApplication([])
+    window = TableWidgetExample()
+    window.show()
+    app.exec_()

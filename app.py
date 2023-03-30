@@ -5,7 +5,7 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 from datetime import datetime
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QApplication, QTableWidget, QTableWidgetItem
+from PyQt5.QtWidgets import QApplication, QTableWidget, QTableWidgetItem, QPushButton
 import hashlib
 
 
@@ -432,11 +432,9 @@ def llista_metges_hores():
             list_metges.append(dict_metges)
     return list_metges
 
-
-
 def tabChanged():
-    P_Pacient.tableWidget.setColumnCount(3)
-    P_Pacient.tableWidget.setHorizontalHeaderLabels(['Metge', 'Dia', 'Hora'])
+    P_Pacient.tableWidget.setColumnCount(4)
+    P_Pacient.tableWidget.setHorizontalHeaderLabels(['Metge', 'Dia', 'Hora', 'Eliminar'])
     x = 0
     nom = P_Pacient.usuari.text()
     nom = nom.split(" ")
@@ -460,14 +458,70 @@ def tabChanged():
                 P_Pacient.tableWidget.setItem( y ,1 ,QTableWidgetItem(hora[i]['moment_visita'].strftime("%d/%m/%Y")))
                 P_Pacient.tableWidget.setItem( y, 2 ,QTableWidgetItem(hora[i]['moment_visita'].strftime("%H:%M")))
                 y = y + 1 
+                
+    for row in range(P_Pacient.tableWidget.rowCount()):
+        button = QPushButton('Eliminar')
+        pos =P_Pacient.tableWidget.indexAt(button.pos())
+        button.clicked.connect(lambda checked, row=row: eliminar_cita(row,pos))
+        P_Pacient.tableWidget.setCellWidget(row, P_Pacient.tableWidget.columnCount()-1, button)
+
+    P_Pacient.llista_metges.clear()
+    dades = Dades
+    for dada in range(len(dades)):
+        nom = dades[dada]
+        P_Pacient.llista_metges.addItem(nom['nom'])
+
+def eliminar_cita(row,pos):
+    print(row)
     
-
-
-"""
-def borra_txt_login():
-    Login.errorusuari.setText("")
-"""
-
+    nom = P_Pacient.usuari.text()
+    nom = nom.split(" ")
+    usuari = Usuaris.find_one({"login": nom[1]})
+    
+    medico = P_Pacient.tableWidget.item(row, 0).text()
+    dia = P_Pacient.tableWidget.item(row, 1).text()
+    hora = P_Pacient.tableWidget.item(row, 2).text()
+    
+    print(medico)
+    print(dia)
+    print(hora)
+    
+    #contar los espacios en blanco
+    spais = medico.count(" ")
+    print(spais)
+    if pos.isValid():
+        if (spais == 3):
+            medico = medico.split(" ")
+            print(medico)
+            medi = medico[2]+" "+medico[3]
+            medicos = Usuaris.find_one({"Cognoms": medi})
+            print(medicos)
+            idmetge = medicos.get('_id')
+            
+            if hora != "":
+                dicionario = {"_id":0}
+                hora = hora + ":00"
+                diacomplert = datetime.combine(datetime.strptime(dia, '%d/%m/%Y').date(), datetime.strptime(hora, '%H:%M:%S').time())
+                demanar_visita(idmetge,"0",dicionario,diacomplert)
+                P_Pacient.tableWidget.removeRow(pos.row())
+                P_Pacient.error_2.setText("Visita eliminada")
+                tabChanged()
+        else:
+            medico = medico.split(" ")
+            print(medico[0])
+            medi = medico[1] + " " + medico[2]
+            medicos = Usuaris.find_one({"Cognoms": medi})
+            idmetge = medicos.get('_id')
+            
+            if hora != "":
+                dicionario = {"_id":0}
+                hora = hora + ":00"
+                diacomplert = datetime.combine(datetime.strptime(dia, '%d/%m/%Y').date(), datetime.strptime(hora, '%H:%M:%S').time())
+                demanar_visita(idmetge,"0",dicionario,diacomplert)
+                P_Pacient.tableWidget.removeRow(pos.row())
+                P_Pacient.error_2.setText("Visita eliminada")
+                tabChanged()
+        
 
 # Buttonns Login
 # Login.Usuari_name.textEdited.connect(borra_txt_login)
@@ -499,6 +553,7 @@ P_Pacient.comboBox.currentIndexChanged.connect(comboBoxChanged2)
 P_Pacient.pushButton.clicked.connect(action_Pacient)
 
 P_Pacient.tabWidget.currentChanged.connect(tabChanged)
+
 
 Dades = llista_hores_metge()
 
