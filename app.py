@@ -433,8 +433,8 @@ def llista_metges_hores():
     return list_metges
 
 def tabChanged():
-    P_Pacient.tableWidget.setColumnCount(4)
-    P_Pacient.tableWidget.setHorizontalHeaderLabels(['Metge', 'Dia', 'Hora', 'Eliminar'])
+    P_Pacient.tableWidget.setColumnCount(5)
+    P_Pacient.tableWidget.setHorizontalHeaderLabels(['Metge', 'Dia', 'Hora', 'Editar', 'Eliminar'])
     x = 0
     nom = P_Pacient.usuari.text()
     nom = nom.split(" ")
@@ -461,15 +461,22 @@ def tabChanged():
                 
     for row in range(P_Pacient.tableWidget.rowCount()):
         button = QPushButton('Eliminar')
-        pos =P_Pacient.tableWidget.indexAt(button.pos())
+        buttoneditar = QPushButton('Editar')
+        pos = P_Pacient.tableWidget.indexAt(button.pos())
         button.clicked.connect(lambda checked, row=row: eliminar_cita(row,pos))
+        buttoneditar.clicked.connect(lambda checked, row=row: editar_cita(row,pos))
         P_Pacient.tableWidget.setCellWidget(row, P_Pacient.tableWidget.columnCount()-1, button)
+        P_Pacient.tableWidget.setCellWidget(row, P_Pacient.tableWidget.columnCount()-2, buttoneditar)
 
     P_Pacient.llista_metges.clear()
     dades = Dades
     for dada in range(len(dades)):
         nom = dades[dada]
         P_Pacient.llista_metges.addItem(nom['nom'])
+
+
+def editar_cita(row,pos):
+    
 
 def eliminar_cita(row,pos):
     print(row)

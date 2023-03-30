@@ -234,22 +234,15 @@ color: Black;</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="QPushButton" name="pushButton_2">
-          <property name="text">
-           <string>PushButton</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QTableWidget" name="tableWidget"/>
-        </item>
         <item row="2" column="0">
          <widget class="QLabel" name="error_2">
           <property name="text">
            <string/>
           </property>
          </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QTableWidget" name="tableWidget"/>
         </item>
        </layout>
       </widget>

@@ -34,15 +34,12 @@ def convert_to_combobox(table, row):
 
     # Agregar un botón "Aceptar" y desactivar el botón "Eliminar"
     button_accept = QPushButton('Aceptar')
-    button_accept.clicked.connect(lambda checked, row=row: accept_changes(table, row))
+    button_accept.clicked.connect(lambda checked, row=row: accept_changes(table, row, combo_box))
     table.setCellWidget(row, 2, button_accept)
     table.cellWidget(row, 3).setEnabled(False)
 
 # Función para aceptar los cambios y volver a un texto normal
-def accept_changes(table, row):
-    # Obtener el cuadro combinado correspondiente
-    combo_box = table.cellWidget(row, 1)
-
+def accept_changes(table, row, combo_box):
     # Obtener el índice seleccionado y el texto correspondiente
     index = combo_box.currentIndex()
     text = combo_box.currentText()
@@ -74,4 +71,3 @@ table.show()
 
 # Ejecutar la aplicación
 app.exec_()
-
