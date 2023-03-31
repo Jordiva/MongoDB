@@ -1,11 +1,12 @@
 
 from ctypes import cast
 import os
+import time
 from pymongo import MongoClient
 from dotenv import load_dotenv
 from datetime import datetime
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QApplication, QTableWidget, QTableWidgetItem, QPushButton
+from PyQt5.QtWidgets import QApplication, QTableWidget, QTableWidgetItem, QPushButton, QComboBox
 import hashlib
 
 
@@ -464,7 +465,7 @@ def tabChanged():
         buttoneditar = QPushButton('Editar')
         pos = P_Pacient.tableWidget.indexAt(button.pos())
         button.clicked.connect(lambda checked, row=row: eliminar_cita(row,pos))
-        buttoneditar.clicked.connect(lambda checked, row=row: editar_cita(row,pos))
+        buttoneditar.clicked.connect(lambda checked, row=row: convert_to_combobox(P_Pacient.tableWidget,row))
         P_Pacient.tableWidget.setCellWidget(row, P_Pacient.tableWidget.columnCount()-1, button)
         P_Pacient.tableWidget.setCellWidget(row, P_Pacient.tableWidget.columnCount()-2, buttoneditar)
 
@@ -475,11 +476,132 @@ def tabChanged():
         P_Pacient.llista_metges.addItem(nom['nom'])
 
 
-def editar_cita(row,pos):
-    
+def convert_to_combobox(table, row):
+    # Obtener la celda correspondiente en la columna 1
+    cell = table.item(row, 1)
 
+    # Crear un cuadro combinado y agregar las opciones
+    combo_box = QComboBox()
+    combo_box1 = QComboBox()    
+    
+    
+    metge =table.item(row, 0).text()
+    dia = table.item(row, 1).text()
+    #hora = P_Pacient.tableWidget.item(row, 2).text()
+    dia = dia.split("/")
+    dia = dia[2] + "-" + dia[1] + "-" + dia[0]
+    for dada in range(len(Dades)):
+        tot = Dades[dada]
+        hora = tot['hores']
+        if tot['nom'] == metge:
+            for i in range(len(hora)):
+                if hora[i]['moment_visita'].strftime("%Y-%m-%d") == dia:
+                    if hora[i]['id_pacient'] == 0:
+                        combo_box1.addItem(hora[i]['moment_visita'].strftime("%H:%M")) 
+    
+    
+    tothors = []
+
+    for dada in range(len(Dades)):
+        tot = Dades[dada]
+        hora = tot['hores']
+        if tot['nom'] == metge:
+            for i in range(len(hora)):
+                if hora[i]['moment_visita'].strftime("%d/%m/%Y") not in tothors:
+                    combo_box.addItem(hora[i]['moment_visita'].strftime("%Y-%m-%d"))
+                    tothors.append(hora[i]['moment_visita'].strftime("%d/%m/%Y"))
+    
+    # Seleccionar la opción correspondiente al texto de la celda
+    index = combo_box.findText(cell.text())
+    if index >= 0:
+        combo_box.setCurrentIndex(index)
+
+    # Reemplazar la celda con el cuadro combinado
+    table.setCellWidget(row, 1, combo_box)
+    table.setCellWidget(row, 2, combo_box1)
+
+    # Agregar un botón "Aceptar" y desactivar el botón "Eliminar"
+    button_accept = QPushButton('Aceptar')
+    button_accept.clicked.connect(lambda checked, row=row: accept_changes(table, row, combo_box, combo_box1))
+    table.setCellWidget(row, 3, button_accept)
+    table.cellWidget(row, 4).setEnabled(False)
+
+
+
+def accept_changes(table, row, combo_box, combo_box1):
+    dataVella = table.item(row, 1).text()
+    dataNova = combo_box.currentText()
+    
+    horaVella = table.item(row, 2).text()
+    horaNova = combo_box1.currentText()
+    
+    metge = table.item(row, 0).text()
+    
+    
+    horas = horaNova
+    
+    
+    
+    dataVella = dataVella.split("/")
+    dataVella = dataVella[0] + "/" + dataVella[1] + "/" + dataVella[2]
+    dataNova = dataNova.split("-")
+    dataNova = dataNova[2] + "/" + dataNova[1] + "/" + dataNova[0]
+    horaVella = horaVella + ":00"
+    horaNova = horaNova + ":00"
+    
+    DiaVell = datetime.combine(datetime.strptime(dataVella, '%d/%m/%Y').date(), datetime.strptime(horaVella, '%H:%M:%S').time())
+    DiaNou = datetime.combine(datetime.strptime(dataNova, '%d/%m/%Y').date(), datetime.strptime(horaNova, '%H:%M:%S').time())
+   
+    
+    pacient = P_Pacient.usuari_2.text()
+    
+    pacient = pacient.split(" ")
+    usuari = Usuaris.find_one({"login": pacient[1]})
+    
+    idusuari = usuari.get('_id')
+    
+    # Reemplazar el cuadro combinado con un objeto QTableWidgetItem
+    dia = QTableWidgetItem(dataNova)
+    hora = QTableWidgetItem(horas)
+    table.setItem(row, 1, dia)
+    table.setItem(row, 2, hora)
+    messatge = ""
+    spais = metge.count(" ")
+    if (spais == 3):
+            medico = metge.split(" ")
+            medi = medico[2]+" "+medico[3]
+            medicos = Usuaris.find_one({"Cognoms": medi})
+            idmetge = medicos.get('_id')
+            dicionario = {"_id":0}
+            messatge= Update_visiata(idmetge,dicionario,usuari,DiaVell,DiaNou)
+    else:
+        
+            medico = metge.split(" ")
+            medi = medico[1] + " " + medico[2]
+            medicos = Usuaris.find_one({"Cognoms": medi})
+            idmetge = medicos.get('_id')
+            dicionario = {"_id":0}
+            messatge =Update_visiata(idmetge,dicionario,usuari,DiaVell,DiaNou)
+
+    """
+    button_accept = QPushButton('Editar')
+    button_accept.clicked.connect(lambda checked, row=row: convert_to_combobox(table, row))
+    table.setCellWidget(row, 3, button_accept)
+    """
+    
+    table.cellWidget(row, 4).setEnabled(True)
+    
+    if isinstance(table.cellWidget(row, 2), QComboBox):
+        combo_box.deleteLater()
+        combo_box1.deleteLater()
+    
+    P_Pacient.error_2.setText(messatge)
+    table.clearContents()
+    #hacer una pausa de 1 segundo
+    time.sleep(1)
+    tabChanged()
+    
 def eliminar_cita(row,pos):
-    print(row)
     
     nom = P_Pacient.usuari.text()
     nom = nom.split(" ")
@@ -489,20 +611,15 @@ def eliminar_cita(row,pos):
     dia = P_Pacient.tableWidget.item(row, 1).text()
     hora = P_Pacient.tableWidget.item(row, 2).text()
     
-    print(medico)
-    print(dia)
-    print(hora)
+ 
     
     #contar los espacios en blanco
     spais = medico.count(" ")
-    print(spais)
     if pos.isValid():
         if (spais == 3):
             medico = medico.split(" ")
-            print(medico)
             medi = medico[2]+" "+medico[3]
             medicos = Usuaris.find_one({"Cognoms": medi})
-            print(medicos)
             idmetge = medicos.get('_id')
             
             if hora != "":
@@ -515,7 +632,6 @@ def eliminar_cita(row,pos):
                 tabChanged()
         else:
             medico = medico.split(" ")
-            print(medico[0])
             medi = medico[1] + " " + medico[2]
             medicos = Usuaris.find_one({"Cognoms": medi})
             idmetge = medicos.get('_id')
@@ -529,6 +645,28 @@ def eliminar_cita(row,pos):
                 P_Pacient.error_2.setText("Visita eliminada")
                 tabChanged()
         
+
+
+def Update_visiata(id_metge, pacientantic,pacientnou,diahoraAntiga,diahoraNova):
+    metge = Metges.find_one({"_id": id_metge})
+    metgeNom = P_Pacient.llista_metges.currentText()
+    missatge = "Error al demanar la cita"    
+    if metge != None:
+        for cita in metge['agenda']:
+            if cita['moment_visita'] == diahoraAntiga:
+                cita['id_pacient'] = pacientantic['_id']
+                Metges.update_one({'_id': id_metge}, {'$set': {'agenda': metge['agenda']}})
+                #borrar el seleccionado del combobox
+            if cita['moment_visita'] == diahoraNova:
+                    cita['id_pacient'] = pacientnou['_id']
+                    Metges.update_one({'_id': id_metge}, {'$set': {'agenda': metge['agenda']}})
+                    global Dades 
+                    Dades= llista_hores_metge()
+                    missatge = "Cita modificada"
+    
+    return missatge
+
+
 
 # Buttonns Login
 # Login.Usuari_name.textEdited.connect(borra_txt_login)

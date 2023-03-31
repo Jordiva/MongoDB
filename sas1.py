@@ -34,7 +34,7 @@ def convert_to_combobox(table, row):
 
     # Agregar un botón "Aceptar" y desactivar el botón "Eliminar"
     button_accept = QPushButton('Aceptar')
-    button_accept.clicked.connect(lambda checked, row=row: accept_changes(table, row, combo_box))
+    button_accept.clicked.connect(lambda checked, row=row, combo_box=combo_box: accept_changes(table, row, combo_box))
     table.setCellWidget(row, 2, button_accept)
     table.cellWidget(row, 3).setEnabled(False)
 
@@ -53,6 +53,11 @@ def accept_changes(table, row, combo_box):
     button_convert.clicked.connect(lambda checked, row=row: convert_to_combobox(table, row))
     table.setCellWidget(row, 2, button_convert)
     table.cellWidget(row, 3).setEnabled(True)
+
+    # Ocultar el cuadro combinado si existe
+    if isinstance(table.cellWidget(row, 1), QComboBox):
+        combo_box.deleteLater()
+        
 
 # Función para eliminar una fila
 def delete_row(table, row):
