@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>651</width>
-    <height>470</height>
+    <width>940</width>
+    <height>652</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,22 +30,18 @@ background-color: qlineargradient(spread:pad, x1:0.637, y1:0.392364, x2:0.01, y2
         <string>Consulta Visites</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="2" column="1">
-         <widget class="QPushButton" name="pushButton">
-          <property name="text">
-           <string>PushButton</string>
-          </property>
-         </widget>
-        </item>
         <item row="1" column="0">
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::MinimumExpanding</enum>
+          </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>20</width>
-            <height>40</height>
+            <width>27</width>
+            <height>37</height>
            </size>
           </property>
          </spacer>
@@ -67,6 +63,86 @@ color: Black;</string>
           </property>
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;sa&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QTableWidget" name="tableWidget"/>
+        </item>
+        <item row="2" column="0" colspan="2">
+         <widget class="QCalendarWidget" name="calendarWidget"/>
+        </item>
+        <item row="5" column="1">
+         <widget class="QDateEdit" name="dateEdit">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="2" rowspan="2">
+         <widget class="QTextEdit" name="Informe"/>
+        </item>
+        <item row="3" column="2">
+         <spacer name="verticalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="6" column="0">
+         <spacer name="verticalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="nom">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="2">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Informe</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0">
+         <widget class="QPushButton" name="cancelar">
+          <property name="text">
+           <string>Cancelar</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="2">
+         <widget class="QPushButton" name="guardar">
+          <property name="text">
+           <string>Guardar</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QTimeEdit" name="timeEdit">
+          <property name="enabled">
+           <bool>false</bool>
           </property>
          </widget>
         </item>

@@ -6,8 +6,10 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 from datetime import datetime
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QApplication, QTableWidget, QTableWidgetItem, QPushButton, QComboBox
+from PyQt5.QtGui import QTextCharFormat, QBrush, QColor 
+from PyQt5.QtWidgets import QApplication, QTableWidget, QTableWidgetItem, QPushButton, QComboBox ,QAbstractItemView,QDialog, QLabel, QTextEdit, QPushButton, QVBoxLayout
 import hashlib
+from PyQt5.QtCore import QDate
 
 
 app = QtWidgets.QApplication([])
@@ -320,7 +322,31 @@ def gui_Metges():
     Contra_jaTe.hide()
     Rols.hide()
     P_Metge.show()
+    
+    metgeLogin = P_Metge.usuari.text()
+    metgeLogin = metgeLogin.split(" ")
+    
+    metge = Usuaris.find_one({"login": metgeLogin[1]})
+    id_metge = metge.get("_id")
+    
+    for dada in range(len(Dades)):
+        metges = Dades[dada]
+        if metges['id'] == id_metge:
+            hora = metges['hores']
+            for h in range(len(hora)):
+                if hora[h]['id_pacient'] != 0:
+                    if hora[h]['realitzada'] == 'n':
+                        highlight_date(QDate(int(hora[h]['moment_visita'].year), int(hora[h]['moment_visita'].month), int(hora[h]['moment_visita'].day)))   
+                
 
+def highlight_date(date):
+        # Definir el formato de texto para resaltar el día
+        date_format = QTextCharFormat()
+        date_format.setBackground(QBrush(QColor('red')))
+
+        # Resaltar el día en el calendario
+        P_Metge.calendarWidget.setDateTextFormat(date, date_format)
+        
 #carrga la llista de metges
 def gui_Pacients():
     Rols.hide()
@@ -331,6 +357,7 @@ def gui_Pacients():
     for dada in range(len(dades)):
         nom = dades[dada]
         P_Pacient.llista_metges.addItem(nom['nom'])
+    
 
 #mira si el metge cambia en el combobox
 def comboBoxChanged():
@@ -611,7 +638,6 @@ def eliminar_cita(row,pos):
     dia = P_Pacient.tableWidget.item(row, 1).text()
     hora = P_Pacient.tableWidget.item(row, 2).text()
     
- 
     
     #contar los espacios en blanco
     spais = medico.count(" ")
@@ -667,6 +693,52 @@ def Update_visiata(id_metge, pacientantic,pacientnou,diahoraAntiga,diahoraNova):
     return missatge
 
 
+def action_calendar():
+    date = P_Metge.calendarWidget.selectedDate().toString("yyyy-MM-dd")
+    tabla = P_Metge.tableWidget
+
+    tabla.clearContents()
+    fila = tabla.setRowCount(0)
+    tabla.setColumnCount(3)
+    tabla.setHorizontalHeaderLabels(["Nom Pacient", "Hora", "Día"])
+    tabla.setSelectionBehavior(QAbstractItemView.SelectRows)
+    metgeLogin = P_Metge.usuari.text()
+    metgeLogin = metgeLogin.split(" ")
+    
+    metge = Usuaris.find_one({"login": metgeLogin[1]})
+    id_metge = metge.get("_id")
+    
+    for dada in range(len(Dades)):
+        metges = Dades[dada]
+        if metges['id'] == id_metge:
+            hora = metges['hores']
+            for h in range(len(hora)):
+                if hora[h]['id_pacient'] != 0:  
+                    if hora[h]['realitzada'] =='n':           
+                        if hora[h]['moment_visita'].strftime("%Y-%m-%d") == date:
+                            print(hora[h]['moment_visita'])
+                            print(hora[h]['id_pacient'])                        
+                            fila = tabla.rowCount()
+                            tabla.insertRow(fila)
+                            
+                            # Agregar los datos a las celdas de la fila
+                            id_paciente = hora[h]['id_pacient']
+                            hora_visita = hora[h]['moment_visita'].strftime("%H:%M:%S")
+                            dia_visita = hora[h]['moment_visita'].strftime("%Y-%m-%d")
+                            
+                            p = Usuaris.find_one({"_id": id_paciente})
+                            nom = p['Nom'] + " " + p['Cognoms']
+                            #ajuntar el nom i cognom
+                            
+                            
+                            tabla.setItem(fila, 0, QTableWidgetItem(str(nom)))
+                            tabla.setItem(fila, 1, QTableWidgetItem(str(hora_visita)))
+                            tabla.setItem(fila, 2, QTableWidgetItem(str(dia_visita)))
+                            #tabla.itemSelectionChanged(informe_mostrar_añadir)
+
+
+
+
 
 # Buttonns Login
 # Login.Usuari_name.textEdited.connect(borra_txt_login)
@@ -692,6 +764,7 @@ P_Pacient.comboBox.currentIndexChanged.connect(comboBoxChanged2)
 
 # Buttons-menu Metge
 
+P_Metge.calendarWidget.clicked.connect(action_calendar)
 
 # Buttons-menu Pacient
 

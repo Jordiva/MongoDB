@@ -1,78 +1,58 @@
-from PyQt5.QtWidgets import QApplication, QTableWidget, QTableWidgetItem, QPushButton, QComboBox
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QLineEdit, QTextEdit, QVBoxLayout, QHBoxLayout, QDialog, QMessageBox
 
-app = QApplication([])
 
-# Crear la tabla con 3 filas y 4 columnas
-table = QTableWidget(3, 4)
+class MainWidget(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setup_ui()
 
-# Agregar botones al final de cada fila
-for row in range(table.rowCount()):
-    button_convert = QPushButton('Convertir a ComboBox')
-    button_convert.clicked.connect(lambda checked, row=row: convert_to_combobox(table, row))
-    table.setCellWidget(row, 2, button_convert)
+    def setup_ui(self):
+        self.setGeometry(100, 100, 300, 200)
+        self.setWindowTitle("Ejemplo de Popup")
 
-    button_delete = QPushButton('Eliminar')
-    button_delete.clicked.connect(lambda checked, row=row: delete_row(table, row))
-    table.setCellWidget(row, 3, button_delete)
+        self.button = QPushButton("Agregar informe")
+        self.label = QLabel("")
 
-# Función para convertir una celda en un cuadro combinado
-def convert_to_combobox(table, row):
-    # Obtener la celda correspondiente en la columna 1
-    cell = table.item(row, 1)
+        layout = QVBoxLayout()
+        layout.addWidget(self.button)
+        layout.addWidget(self.label)
 
-    # Crear un cuadro combinado y agregar las opciones
-    combo_box = QComboBox()
-    combo_box.addItems(['Opción 1', 'Opción 2', 'Opción 3'])
+        self.setLayout(layout)
 
-    # Seleccionar la opción correspondiente al texto de la celda
-    index = combo_box.findText(cell.text())
-    if index >= 0:
-        combo_box.setCurrentIndex(index)
+        self.button.clicked.connect(self.show_popup)
 
-    # Reemplazar la celda con el cuadro combinado
-    table.setCellWidget(row, 1, combo_box)
+    def show_popup(self):
+        popup = Popup()
+        if popup.exec_() == QDialog.Accepted:
+            informe = popup.informe.toPlainText()
+            self.label.setText(informe)
+            
 
-    # Agregar un botón "Aceptar" y desactivar el botón "Eliminar"
-    button_accept = QPushButton('Aceptar')
-    button_accept.clicked.connect(lambda checked, row=row, combo_box=combo_box: accept_changes(table, row, combo_box))
-    table.setCellWidget(row, 2, button_accept)
-    table.cellWidget(row, 3).setEnabled(False)
+class Popup(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Agregar informe")
+        self.informe = QTextEdit()
 
-# Función para aceptar los cambios y volver a un texto normal
-def accept_changes(table, row, combo_box):
-    # Obtener el índice seleccionado y el texto correspondiente
-    index = combo_box.currentIndex()
-    text = combo_box.currentText()
-
-    # Reemplazar el cuadro combinado con un objeto QTableWidgetItem
-    item = QTableWidgetItem(text)
-    table.setItem(row, 1, item)
-
-    # Restablecer el botón "Convertir" y habilitar el botón "Eliminar"
-    button_convert = QPushButton('Convertir a ComboBox')
-    button_convert.clicked.connect(lambda checked, row=row: convert_to_combobox(table, row))
-    table.setCellWidget(row, 2, button_convert)
-    table.cellWidget(row, 3).setEnabled(True)
-
-    # Ocultar el cuadro combinado si existe
-    if isinstance(table.cellWidget(row, 1), QComboBox):
-        combo_box.deleteLater()
+        self.ok_button = QPushButton("Aceptar")
+        self.cancel_button = QPushButton("Cancelar")
         
+        buttons_layout = QHBoxLayout()
+        buttons_layout.addWidget(self.ok_button)
+        buttons_layout.addWidget(self.cancel_button)
 
-# Función para eliminar una fila
-def delete_row(table, row):
-    table.removeRow(row)
+        layout = QVBoxLayout()
+        layout.addWidget(self.informe)
+        layout.addLayout(buttons_layout)
 
-# Agregar algunos datos de ejemplo
-table.setItem(0, 0, QTableWidgetItem('A1'))
-table.setItem(0, 1, QTableWidgetItem('B1'))
-table.setItem(1, 0, QTableWidgetItem('A2'))
-table.setItem(1, 1, QTableWidgetItem('B2'))
-table.setItem(2, 0, QTableWidgetItem('A3'))
-table.setItem(2, 1, QTableWidgetItem('B3'))
+        self.setLayout(layout)
 
-# Mostrar la tabla
-table.show()
+        self.ok_button.clicked.connect(self.accept)
+        self.cancel_button.clicked.connect(self.reject)
 
-# Ejecutar la aplicación
-app.exec_()
+
+if __name__ == "__main__":
+    app = QApplication([])
+    widget = MainWidget()
+    widget.show()
+    app.exec_()
