@@ -7,9 +7,9 @@ from dotenv import load_dotenv
 from datetime import datetime
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtGui import QTextCharFormat, QBrush, QColor 
-from PyQt5.QtWidgets import QApplication, QTableWidget, QTableWidgetItem, QPushButton, QComboBox ,QAbstractItemView,QDialog, QLabel, QTextEdit, QPushButton, QVBoxLayout
+from PyQt5.QtWidgets import QApplication, QTableWidget , QTableWidgetItem, QPushButton, QComboBox ,QAbstractItemView,QDialog, QLabel, QTextEdit, QPushButton, QVBoxLayout
 import hashlib
-from PyQt5.QtCore import QDate
+from PyQt5.QtCore import QDate, QTime, QDateTime, Qt
 
 
 app = QtWidgets.QApplication([])
@@ -697,6 +697,8 @@ def action_calendar():
     date = P_Metge.calendarWidget.selectedDate().toString("yyyy-MM-dd")
     tabla = P_Metge.tableWidget
 
+    P_Metge.label.setText("")
+    
     tabla.clearContents()
     fila = tabla.setRowCount(0)
     tabla.setColumnCount(3)
@@ -708,6 +710,21 @@ def action_calendar():
     metge = Usuaris.find_one({"login": metgeLogin[1]})
     id_metge = metge.get("_id")
     
+    
+    
+    def on_table_cell_clicked(row, col):
+        nom = tabla.item(row,0).text()
+        dia = tabla.item(row,2).text()
+        hora = tabla.item(row,1).text()
+
+        P_Metge.nom.setText(nom)
+        P_Metge.dateEdit.setDate(datetime.strptime(dia, '%Y-%m-%d').date())
+        P_Metge.timeEdit.setTime(datetime.strptime(hora, '%H:%M:%S').time())
+        P_Metge.Informe.setText("")
+        
+        
+    row = tabla.cellClicked.connect(on_table_cell_clicked)
+    
     for dada in range(len(Dades)):
         metges = Dades[dada]
         if metges['id'] == id_metge:
@@ -715,9 +732,7 @@ def action_calendar():
             for h in range(len(hora)):
                 if hora[h]['id_pacient'] != 0:  
                     if hora[h]['realitzada'] =='n':           
-                        if hora[h]['moment_visita'].strftime("%Y-%m-%d") == date:
-                            print(hora[h]['moment_visita'])
-                            print(hora[h]['id_pacient'])                        
+                        if hora[h]['moment_visita'].strftime("%Y-%m-%d") == date:                        
                             fila = tabla.rowCount()
                             tabla.insertRow(fila)
                             
@@ -728,16 +743,62 @@ def action_calendar():
                             
                             p = Usuaris.find_one({"_id": id_paciente})
                             nom = p['Nom'] + " " + p['Cognoms']
-                            #ajuntar el nom i cognom
                             
                             
                             tabla.setItem(fila, 0, QTableWidgetItem(str(nom)))
                             tabla.setItem(fila, 1, QTableWidgetItem(str(hora_visita)))
                             tabla.setItem(fila, 2, QTableWidgetItem(str(dia_visita)))
-                            #tabla.itemSelectionChanged(informe_mostrar_añadir)
+                            
+
+def borra_información():
+    invalid_date = QDate.fromString("01-01-0001", "dd-MM-yyyy")  
+    invalid_time = QTime.fromString("00:00:00", "hh:mm:ss")  
+    P_Metge.nom.setText("")
+    P_Metge.dateEdit.setDate(invalid_date)
+    P_Metge.timeEdit.setTime(invalid_time)
+    P_Metge.Informe.setText("")
 
 
 
+def actualitzar_informe():
+    metgeLogin = P_Metge.usuari.text()
+    metgeLogin = metgeLogin.split(" ")
+    
+    metges = Usuaris.find_one({"login": metgeLogin[1]})
+    id_metge = metges.get("_id")
+    
+    metge = Metges.find_one({"_id": id_metge})
+    
+    nom = P_Metge.nom.text()
+    
+    dia =P_Metge.dateEdit.text()
+    hora = P_Metge.timeEdit.text()
+    dia = dia.split("/")
+    dia = dia[0]+"/"+dia[1]+"/"+dia[2]
+    
+    hora = hora + ":00"
+    diacomplert = datetime.combine(datetime.strptime(dia, '%d/%m/%Y').date(), datetime.strptime(hora, '%H:%M:%S').time())
+    if metge != None:
+        for cita in metge['agenda']:
+            if cita['moment_visita'] == diacomplert:
+                if P_Metge.Informe.toPlainText() != "":
+                    if nom != "":
+                        cita['informe'] = P_Metge.Informe.toPlainText()
+                        cita['realitzada'] = 's'
+                        Metges.update_one({'_id': id_metge}, {'$set': {'agenda': metge['agenda']}})
+                        global Dades 
+                        Dades= llista_hores_metge()
+                        borra_información()
+                        P_Metge.label.setText("Informe actualizado")
+                        P_Metge.label.setStyleSheet("color: green")
+                        
+                        
+                    else:
+                        P_Metge.label.setText("No has seleccionado ninguna cita")
+                        P_Metge.label.setStyleSheet("color: red")
+                else:
+                    P_Metge.label.setText("No has escrito ningún informe")
+                    P_Metge.label.setStyleSheet("color: red")
 
 
 # Buttonns Login
@@ -765,6 +826,8 @@ P_Pacient.comboBox.currentIndexChanged.connect(comboBoxChanged2)
 # Buttons-menu Metge
 
 P_Metge.calendarWidget.clicked.connect(action_calendar)
+P_Metge.cancelar.clicked.connect(borra_información)
+P_Metge.guardar.clicked.connect(actualitzar_informe)
 
 # Buttons-menu Pacient
 
