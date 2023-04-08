@@ -1,1 +1,6 @@
-MONGODB_URI = "mongodb+srv://admin:admin@jvalldaur.hxfathw.mongodb.net/?retryWrites=true&w=majority"
+MONGO_URI= "mongodb+srv://admin:admin@jvalldaur.hxfathw.mongodb.net/?retryWrites=true&w=majority"
+BD=jvalldaur
+USUARIS=USUARIS
+PACIENTS=PACIENTS
+METGES=METGES
+ARXIU=./Tasca3.xlsx
