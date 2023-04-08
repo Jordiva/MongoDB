@@ -14,8 +14,9 @@
    <string>Login</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget#centralwidget{
-background-color: qlineargradient(spread:pad, x1:0.637, y1:0.392364, x2:0.01, y2:0.994, stop:0 rgba(26, 255, 147, 255), stop:1 rgba(255, 255, 255, 255));
+   <string notr="true">
+QWidget#centralwidget{
+background-color:qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0.228856 rgba(223, 0, 255, 255), stop:0.761194 rgba(0, 186, 224, 255));
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
