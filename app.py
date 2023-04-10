@@ -911,6 +911,7 @@ def actualitzar_informe():
     P_Pacient.close()
 
 
+
 # Buttonns Login
 # Login.Usuari_name.textEdited.connect(borra_txt_login)
 Login.pushButton.clicked.connect(action_Login)
