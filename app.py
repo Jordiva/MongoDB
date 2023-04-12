@@ -771,6 +771,7 @@ def eliminar_cita(row, pos):
 
 def tabChangedMetge():
 
+    P_Metge.comboBox.clear()
     for i in pacients:
         P_Metge.comboBox.addItem(i['nom'])
 
