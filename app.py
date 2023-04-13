@@ -886,7 +886,7 @@ def actualitzar_informe():
     if metge != None:
         for cita in metge['agenda']:
             if cita['moment_visita'] == diacomplert:
-                if P_Metge.Informe.toPlainText() != "":
+                if P_Metge.Informe.toPlainText() != "": 
                     if nom != "":
                         cita['informe'] = P_Metge.Informe.toPlainText()
                         cita['realitzada'] = 's'
@@ -899,17 +899,13 @@ def actualitzar_informe():
                         P_Metge.label.setStyleSheet("color: green")
 
                     else:
-                        P_Metge.label.setText(
-                            "No has seleccionado ninguna cita")
+                        P_Metge.label.setText("No has escrito ningún informe")
                         P_Metge.label.setStyleSheet("color: red")
                 else:
-                    P_Metge.label.setText("No has escrito ningún informe")
+                    P_Metge.label.setText("No has seleccionado ninguna cita")
                     P_Metge.label.setStyleSheet("color: red")
 
 
-    Login.show()
-    P_Metge.close()
-    P_Pacient.close()
 
 
 
