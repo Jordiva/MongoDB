@@ -286,8 +286,7 @@ def demanar_visita(id_metge, id_pacient, pacient, diahora):
                 missatge = "La teva visita amb el/la " + metgeNom + \
                     " ha estat demanada correctament Pel dia " + str(diahora)
                 # borrar el seleccionado del combobox
-                P_Pacient.comboBox_2.removeItem(
-                    P_Pacient.comboBox_2.currentIndex())
+                P_Pacient.comboBox_2.removeItem(P_Pacient.comboBox_2.currentIndex())
                 global Dades
                 Dades = llista_hores_metge()
                 P_Pacient.tableWidget.clearContents()
@@ -720,8 +719,10 @@ def accept_changes(table, row, combo_box, combo_box1):
     P_Pacient.error_2.setText(messatge)
     table.clearContents()
     # hacer una pausa de 1 segundo
-    time.sleep(1)
+    time.sleep(2)
     tabChanged()
+    time.sleep(2)
+
 
 
 def eliminar_cita(row, pos):
