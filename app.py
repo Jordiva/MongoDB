@@ -719,7 +719,7 @@ def accept_changes(table, row, combo_box, combo_box1):
     P_Pacient.error_2.setText(messatge)
     table.clearContents()
     # hacer una pausa de 1 segundo
-    time.sleep(2)
+    #time.sleep(2)
     tabChanged()
     time.sleep(2)
 
